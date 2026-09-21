@@ -314,6 +314,77 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
 
 .btn.tut{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.4)}
 .btn.tut:hover{background:rgba(255,255,255,.26);color:#fff;border-color:#fff}
+
+/* ================= Página inicial ================= */
+#emptyState{max-width:none;margin:0;padding:0}
+.lg-plate{display:inline-flex;align-items:center;background:#fff;border-radius:14px;padding:8px 16px;box-shadow:0 6px 22px rgba(0,0,0,.28);min-height:54px}
+.lg-plate.sm{min-height:34px;padding:5px 12px;border-radius:10px;box-shadow:0 2px 10px rgba(15,23,42,.18);border:1px solid var(--line)}
+.lg-slot{display:inline-flex;align-items:center}
+.lg-slot img{height:42px;width:auto;max-width:200px;display:block;object-fit:contain}
+.lg-plate.sm .lg-slot img{height:24px}
+.lg-word{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:2.2px;color:#0b2545;font-size:19px}
+.lg-word svg{width:24px;height:24px}
+.lg-plate.sm .lg-word{font-size:13px;letter-spacing:1.6px}.lg-plate.sm .lg-word svg{width:16px;height:16px}
+.lp-hero{position:relative;overflow:hidden;color:#fff;background:radial-gradient(900px 480px at 82% 12%,rgba(20,184,166,.32),transparent 60%),radial-gradient(700px 420px at 8% 100%,rgba(14,165,233,.22),transparent 60%),linear-gradient(115deg,#07142b 0%,#0b2545 48%,#0a4b5a 100%)}
+.lp-hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:46px 46px;-webkit-mask-image:radial-gradient(ellipse at 70% 40%,#000 10%,transparent 70%);mask-image:radial-gradient(ellipse at 70% 40%,#000 10%,transparent 70%)}
+.lp-in{position:relative;max-width:1240px;margin:0 auto;padding:46px 28px 56px;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:36px;align-items:center}
+.lp-brand{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.lp-org{font-weight:800;letter-spacing:2px;font-size:13px;color:#8ee7dc;line-height:1.35}
+.lp-org small{display:block;font-weight:500;letter-spacing:.3px;color:#b6c6e0;font-size:12.5px}
+.lp-hero h1{margin:26px 0 12px;font-size:clamp(38px,5.4vw,62px);line-height:1.04;letter-spacing:-1.4px;font-weight:800}
+.lp-sub{margin:0;font-size:clamp(16px,1.6vw,19px);color:#cfe0f5;max-width:560px;line-height:1.6}
+.lp-pills{list-style:none;padding:0;margin:20px 0 26px;display:flex;flex-wrap:wrap;gap:8px}
+.lp-pills li{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 13px;font-size:12.5px;font-weight:600;color:#e4efff}
+.lp-hero .drop{background:rgba(255,255,255,.08);border:2px dashed rgba(255,255,255,.42);border-radius:20px;padding:22px 24px;text-align:left;box-shadow:0 12px 40px rgba(0,0,0,.25);backdrop-filter:blur(8px);max-width:580px;color:#fff}
+.lp-hero .drop.over{background:rgba(20,184,166,.24);border-color:#5eead4}
+.drop-h{display:flex;gap:16px;align-items:flex-start}
+.lp-hero .drop svg{width:38px;height:38px;flex:none;color:#5eead4}
+.lp-hero .drop h2{margin:0 0 4px;font-size:20px;color:#fff}
+.lp-hero .drop p{margin:0;max-width:none;color:#cfe0f5;font-size:14px}
+.drop-a{display:flex;align-items:center;gap:18px;margin-top:16px;flex-wrap:wrap}
+.lp-hero .btn.primary{padding:11px 20px;font-size:14px;box-shadow:0 6px 18px rgba(13,148,136,.5)}
+.lp-link{background:none;border:0;color:#8ee7dc;font:600 13.5px var(--font);cursor:pointer;padding:4px 0}.lp-link:hover{text-decoration:underline;color:#fff}
+.lp-hero .req{justify-content:flex-start;margin-top:14px;gap:6px}
+.lp-hero .req span{background:rgba(255,255,255,.12);color:#dbe7fb;font-size:11px;padding:2px 8px}
+.lp-hero .drop small{display:none}
+.lp-art{position:relative}
+.lp-svg{width:100%;height:auto;display:block;overflow:visible}
+.lp-flow{animation:lpflow 1.6s linear infinite}
+@keyframes lpflow{to{stroke-dashoffset:-34}}
+.lp-pin{animation:lpbob 3.2s ease-in-out infinite}.lp-pin.lp-d2{animation-delay:-1.4s}
+@keyframes lpbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.lp-stop{animation:lppop .6s ease both;transform-box:fill-box;transform-origin:center}
+@keyframes lppop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:scale(1)}}
+.lp-sec{padding:58px 0 12px}.lp-sec.alt{background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-bottom:50px;margin-top:34px}
+.lp-wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+.lp-tit{text-align:center;max-width:720px;margin:0 auto 30px}
+.lp-tit span{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--teal);background:rgba(13,148,136,.12);border-radius:20px;padding:3px 13px}
+.lp-tit h2{margin:12px 0 8px;font-size:clamp(24px,3vw,32px);line-height:1.2;color:var(--hd);letter-spacing:-.4px}
+.lp-tit p{margin:0;color:var(--tx2);font-size:16px}
+.lp-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.lp-card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--teal);border-radius:16px;padding:22px 20px;box-shadow:var(--sh);transition:.18s}
+.lp-card:hover{transform:translateY(-4px)}
+.lp-card h3{margin:14px 0 6px;font-size:17px;color:var(--hd)}.lp-card p{margin:0;color:var(--tx2);font-size:14px;line-height:1.55}
+.lp-ic{width:68px;height:68px;border-radius:18px;background:var(--soft2);display:grid;place-items:center}.lp-ic svg{width:50px;height:50px}
+.lp-ic.sm{width:58px;height:58px;border-radius:16px}.lp-ic.sm svg{width:40px;height:40px}
+.lp-whos{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.lp-who{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 10px;text-align:center;box-shadow:var(--sh)}
+.lp-who .lp-ic{margin:0 auto 10px;background:var(--soft)}.lp-who span{font-size:13.5px;font-weight:700;color:var(--hd)}
+.lp-steps{list-style:none;counter-reset:s;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:0;margin:0 0 26px}
+.lp-steps li{counter-increment:s;position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 22px 20px 22px;box-shadow:var(--sh)}
+.lp-steps li:before{content:counter(s);position:absolute;top:-16px;left:20px;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#13315c,#0d9488);color:#fff;font-weight:800;display:grid;place-items:center;box-shadow:0 4px 12px rgba(13,148,136,.4)}
+.lp-steps b{display:block;font-size:17px;color:var(--hd);margin-bottom:4px}.lp-steps p{margin:0;color:var(--tx2);font-size:14px}
+.lp-priv{display:flex;gap:16px;align-items:center;background:rgba(13,148,136,.09);border:1px solid rgba(13,148,136,.28);border-radius:16px;padding:18px 22px}
+.lp-priv .lp-ic{background:transparent;flex:none}.lp-priv b{color:var(--hd)}.lp-priv p{margin:2px 0 0;color:var(--tx2);font-size:14px}
+.lp-foot{display:flex;align-items:center;justify-content:center;gap:14px;padding:36px 20px 44px;color:var(--tx3);font-size:13px;flex-wrap:wrap}
+@media(max-width:1020px){.lp-in{grid-template-columns:1fr;padding-top:34px}.lp-art{max-width:560px;margin:0 auto}.lp-cards{grid-template-columns:repeat(2,1fr)}.lp-whos{grid-template-columns:repeat(3,1fr)}.lp-steps{grid-template-columns:1fr;gap:26px}}
+@media(max-width:560px){.lp-cards{grid-template-columns:1fr}.lp-whos{grid-template-columns:repeat(2,1fr)}.lp-in{padding:26px 18px 40px}.lp-wrap{padding:0 18px}}
+@media(prefers-reduced-motion:reduce){.lp-flow,.lp-pin,.lp-stop{animation:none}}
+.logo.has-logo{width:auto;height:42px;padding:0 12px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.logo.has-logo img{height:26px;width:auto;display:block;max-width:150px;object-fit:contain}
+.logo-set{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.logo-prev{background:#fff;border:1px solid var(--line2);border-radius:12px;padding:8px 14px;min-width:150px;min-height:52px;display:flex;align-items:center;justify-content:center}
+.logo-prev img{max-height:40px;max-width:180px;display:block}
 </style>
 </head>
 <body>
@@ -338,15 +409,76 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
   </header>
 
   <!-- Estado inicial -->
-  <div id="emptyState">
-    <div class="drop" id="drop">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/></svg>
-      <h2>Importe a planilha de diligências</h2>
-      <p>Arraste o arquivo <b>.xlsx</b> para cá ou use o botão abaixo. A planilha pode ser reimportada a qualquer momento — o painel é recalculado por completo.</p>
-      <label class="btn primary" for="fileInput">Selecionar arquivo</label>
-      <div class="req"><span>Codigo</span><span>Data</span><span>Tipo da tarefa</span><span>Tarefa De</span><span>Responsavel</span><span>Cliente</span><span>Endereço</span><span>Base</span><span>Duração</span></div>
-      <small>O processamento é feito localmente no seu navegador; nenhum dado da planilha é enviado a servidores (apenas endereços das unidades são consultados em serviços de geocodificação/rotas quando habilitado).</small>
-    </div>
+<div id="emptyState">
+    <section class="lp-hero">
+      <div class="lp-in">
+        <div class="lp-copy">
+          <div class="lp-brand"><span class="lg-plate"><span class="lg-slot"></span></span><span class="lp-org">GRUPO LABMEDIC<small>Manutenção de equipamentos médicos</small></span></div>
+          <h1>Diligências<br>Técnicas</h1>
+          <p class="lp-sub">Da planilha ao mapa: acompanhe onde a equipe atua, planeje as próximas visitas e leve a melhor rota a cada unidade de saúde.</p>
+          <ul class="lp-pills"><li>Mapa das unidades</li><li>Rotas otimizadas</li><li>Agenda projetada</li></ul>
+          <div class="drop" id="drop">
+            <div class="drop-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/></svg><div><h2>Comece importando a planilha</h2><p>Arraste o arquivo <b>.xlsx</b> para cá ou selecione no computador. Você pode reimportar quando quiser.</p></div></div>
+            <div class="drop-a"><label class="btn primary" for="fileInput">Selecionar planilha</label></div>
+
+          </div>
+        </div>
+        <div class="lp-art"><svg class="lp-svg" viewBox="0 0 600 540" role="img" aria-label="Ilustração: mapa com rota de visitas entre unidades de saúde, agenda projetada e indicadores de rota">
+<defs>
+<linearGradient id="lpmg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f5468"/><stop offset="1" stop-color="#0b2f57"/></linearGradient>
+<clipPath id="lpmc"><rect x="40" y="40" width="520" height="440" rx="30"/></clipPath>
+<filter id="lpsh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity=".38"/></filter>
+<path id="lprt" d="M110 425 C 135 395,160 360,190 335 S 250 372,282 362 S 335 300,352 272 S 425 318,452 300 S 488 232,472 192 S 430 150,384 150"/>
+</defs>
+<rect x="40" y="40" width="520" height="440" rx="30" fill="url(#lpmg)" filter="url(#lpsh)"/>
+<g clip-path="url(#lpmc)">
+<rect x="44" y="43" width="49" height="44" rx="7" fill="#fff" opacity="0.09"/><rect x="44" y="100" width="52" height="38" rx="7" fill="#fff" opacity="0.05"/><rect x="41" y="154" width="50" height="36" rx="7" fill="#fff" opacity="0.09"/><rect x="43" y="215" width="52" height="38" rx="7" fill="#fff" opacity="0.09"/><rect x="40" y="325" width="45" height="39" rx="7" fill="#fff" opacity="0.09"/><rect x="43" y="443" width="45" height="44" rx="7" fill="#fff" opacity="0.05"/><rect x="105" y="40" width="52" height="37" rx="7" fill="#fff" opacity="0.07"/><rect x="105" y="101" width="43" height="40" rx="7" fill="#fff" opacity="0.07"/><rect x="106" y="156" width="42" height="37" rx="7" fill="#fff" opacity="0.09"/><rect x="105" y="211" width="46" height="42" rx="7" fill="#fff" opacity="0.05"/><rect x="102" y="269" width="45" height="36" rx="7" fill="#fff" opacity="0.07"/><rect x="105" y="328" width="43" height="39" rx="7" fill="#fff" opacity="0.09"/><rect x="102" y="384" width="47" height="36" rx="7" fill="#fff" opacity="0.07"/><rect x="102" y="440" width="45" height="37" rx="7" fill="#fff" opacity="0.05"/><rect x="165" y="101" width="45" height="43" rx="7" fill="#fff" opacity="0.09"/><rect x="165" y="157" width="52" height="42" rx="7" fill="#fff" opacity="0.05"/><rect x="165" y="211" width="46" height="40" rx="7" fill="#fff" opacity="0.05"/><rect x="167" y="272" width="52" height="37" rx="7" fill="#fff" opacity="0.05"/><rect x="165" y="328" width="46" height="36" rx="7" fill="#fff" opacity="0.09"/><rect x="166" y="385" width="43" height="37" rx="7" fill="#fff" opacity="0.05"/><rect x="165" y="439" width="51" height="41" rx="7" fill="#fff" opacity="0.07"/><rect x="227" y="44" width="49" height="38" rx="7" fill="#fff" opacity="0.07"/><rect x="227" y="99" width="45" height="39" rx="7" fill="#fff" opacity="0.09"/><rect x="230" y="155" width="52" height="42" rx="7" fill="#fff" opacity="0.07"/><rect x="229" y="211" width="43" height="37" rx="7" fill="#fff" opacity="0.05"/><rect x="228" y="269" width="48" height="40" rx="7" fill="#fff" opacity="0.07"/><rect x="230" y="328" width="46" height="44" rx="7" fill="#fff" opacity="0.05"/><rect x="226" y="383" width="45" height="43" rx="7" fill="#fff" opacity="0.09"/><rect x="230" y="443" width="43" height="40" rx="7" fill="#fff" opacity="0.05"/><rect x="289" y="40" width="43" height="40" rx="7" fill="#fff" opacity="0.07"/><rect x="288" y="97" width="44" height="40" rx="7" fill="#fff" opacity="0.07"/><rect x="289" y="154" width="47" height="38" rx="7" fill="#fff" opacity="0.07"/><rect x="292" y="215" width="44" height="36" rx="7" fill="#fff" opacity="0.05"/><rect x="290" y="270" width="42" height="36" rx="7" fill="#fff" opacity="0.09"/><rect x="291" y="325" width="46" height="41" rx="7" fill="#fff" opacity="0.05"/><rect x="288" y="385" width="50" height="41" rx="7" fill="#fff" opacity="0.09"/><rect x="351" y="42" width="47" height="37" rx="7" fill="#fff" opacity="0.09"/><rect x="350" y="100" width="42" height="43" rx="7" fill="#fff" opacity="0.09"/><rect x="353" y="215" width="42" height="37" rx="7" fill="#fff" opacity="0.05"/><rect x="353" y="384" width="48" height="43" rx="7" fill="#fff" opacity="0.07"/><rect x="354" y="439" width="50" height="44" rx="7" fill="#fff" opacity="0.05"/><rect x="412" y="43" width="42" height="39" rx="7" fill="#fff" opacity="0.09"/><rect x="415" y="156" width="42" height="41" rx="7" fill="#fff" opacity="0.07"/><rect x="416" y="269" width="47" height="43" rx="7" fill="#fff" opacity="0.07"/><rect x="414" y="328" width="52" height="40" rx="7" fill="#fff" opacity="0.05"/><rect x="413" y="383" width="48" height="39" rx="7" fill="#fff" opacity="0.09"/><rect x="413" y="440" width="44" height="43" rx="7" fill="#fff" opacity="0.07"/><rect x="474" y="40" width="46" height="38" rx="7" fill="#fff" opacity="0.05"/><rect x="476" y="98" width="48" height="42" rx="7" fill="#fff" opacity="0.09"/><rect x="476" y="158" width="49" height="41" rx="7" fill="#fff" opacity="0.05"/><rect x="476" y="215" width="42" height="40" rx="7" fill="#fff" opacity="0.09"/><rect x="478" y="268" width="52" height="38" rx="7" fill="#fff" opacity="0.07"/><rect x="474" y="327" width="45" height="38" rx="7" fill="#fff" opacity="0.05"/><rect x="474" y="385" width="43" height="44" rx="7" fill="#fff" opacity="0.09"/><rect x="476" y="439" width="52" height="39" rx="7" fill="#fff" opacity="0.05"/><rect x="538" y="41" width="42" height="43" rx="7" fill="#fff" opacity="0.09"/><rect x="537" y="98" width="46" height="41" rx="7" fill="#fff" opacity="0.09"/><rect x="540" y="158" width="51" height="38" rx="7" fill="#fff" opacity="0.07"/><rect x="537" y="211" width="48" height="42" rx="7" fill="#fff" opacity="0.05"/><rect x="537" y="268" width="48" height="44" rx="7" fill="#fff" opacity="0.09"/><rect x="540" y="327" width="49" height="41" rx="7" fill="#fff" opacity="0.09"/><rect x="536" y="382" width="45" height="39" rx="7" fill="#fff" opacity="0.07"/><rect x="538" y="443" width="47" height="40" rx="7" fill="#fff" opacity="0.09"/>
+<path d="M20 500 L 580 40" stroke="#fff" stroke-opacity=".12" stroke-width="10"/>
+<path d="M120 480 L 300 40" stroke="#fff" stroke-opacity=".08" stroke-width="7"/>
+<path d="M20 310 C 130 262,205 312,292 250 S 470 205,600 120" fill="none" stroke="#1d86ab" stroke-opacity=".55" stroke-width="34" stroke-linecap="round"/>
+<path d="M20 310 C 130 262,205 312,292 250 S 470 205,600 120" fill="none" stroke="#7dd3fc" stroke-opacity=".25" stroke-width="3" stroke-linecap="round"/>
+<ellipse cx="96" cy="110" rx="44" ry="26" fill="#2dd4bf" opacity=".16"/><ellipse cx="480" cy="410" rx="40" ry="24" fill="#2dd4bf" opacity=".16"/><ellipse cx="300" cy="455" rx="50" ry="20" fill="#2dd4bf" opacity=".16"/><ellipse cx="520" cy="250" rx="30" ry="22" fill="#2dd4bf" opacity=".16"/>
+<circle cx="508" cy="78" r="5" fill="#3b82f6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="89" cy="295" r="5" fill="#ec4899" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="463" cy="210" r="6" fill="#14b8a6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="181" cy="102" r="6" fill="#14b8a6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="158" cy="342" r="5" fill="#f59e0b" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="310" cy="146" r="7" fill="#94a3b8" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="520" cy="322" r="7" fill="#3b82f6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="458" cy="183" r="6" fill="#ef4444" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="495" cy="443" r="7" fill="#f59e0b" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="337" cy="333" r="7" fill="#ef4444" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="229" cy="413" r="6" fill="#a855f7" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="225" cy="142" r="7" fill="#ef4444" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="363" cy="324" r="4.5" fill="#ec4899" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="344" cy="128" r="7" fill="#14b8a6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="379" cy="263" r="4" fill="#14b8a6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="334" cy="275" r="7" fill="#3b82f6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="321" cy="117" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="345" cy="304" r="6" fill="#ec4899" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="207" cy="196" r="6" fill="#94a3b8" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="135" cy="243" r="6" fill="#94a3b8" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="338" cy="232" r="4" fill="#a855f7" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="284" cy="386" r="4" fill="#ef4444" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="136" cy="429" r="4" fill="#14b8a6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="169" cy="149" r="4.5" fill="#14b8a6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="421" cy="215" r="5" fill="#84cc16" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="195" cy="387" r="6" fill="#3b82f6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="325" cy="444" r="7" fill="#3b82f6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="506" cy="331" r="7" fill="#ef4444" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="437" cy="171" r="7" fill="#ec4899" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="81" cy="262" r="6" fill="#f59e0b" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="345" cy="174" r="7" fill="#a855f7" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="341" cy="180" r="7" fill="#f59e0b" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="189" cy="449" r="5" fill="#f59e0b" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="231" cy="378" r="5" fill="#a855f7" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="181" cy="169" r="4" fill="#f59e0b" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="525" cy="192" r="4.5" fill="#3b82f6" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="202" cy="268" r="4" fill="#ec4899" stroke="#fff" stroke-width="1.6" opacity=".92"/><circle cx="496" cy="285" r="7" fill="#f59e0b" stroke="#fff" stroke-width="1.6" opacity=".92"/>
+</g>
+<use href="#lprt" fill="none" stroke="#06223f" stroke-opacity=".55" stroke-width="13" stroke-linecap="round"/>
+<use href="#lprt" fill="none" stroke="#2dd4bf" stroke-width="5" stroke-linecap="round"/>
+<use href="#lprt" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="2 15" class="lp-flow"/>
+<g class="lp-stop" style="animation-delay:0.0s"><circle cx="190" cy="335" r="15" fill="#fff" stroke="#14b8a6" stroke-width="3.5"/><text x="190" y="340" text-anchor="middle" font-size="14" font-weight="800" fill="#0b2545">1</text></g><g class="lp-stop" style="animation-delay:0.25s"><circle cx="282" cy="362" r="15" fill="#fff" stroke="#14b8a6" stroke-width="3.5"/><text x="282" y="367" text-anchor="middle" font-size="14" font-weight="800" fill="#0b2545">2</text></g><g class="lp-stop" style="animation-delay:0.5s"><circle cx="352" cy="272" r="15" fill="#fff" stroke="#14b8a6" stroke-width="3.5"/><text x="352" y="277" text-anchor="middle" font-size="14" font-weight="800" fill="#0b2545">3</text></g><g class="lp-stop" style="animation-delay:0.75s"><circle cx="452" cy="300" r="15" fill="#fff" stroke="#14b8a6" stroke-width="3.5"/><text x="452" y="305" text-anchor="middle" font-size="14" font-weight="800" fill="#0b2545">4</text></g><g class="lp-stop" style="animation-delay:1.0s"><circle cx="472" cy="192" r="15" fill="#fff" stroke="#14b8a6" stroke-width="3.5"/><text x="472" y="197" text-anchor="middle" font-size="14" font-weight="800" fill="#0b2545">5</text></g>
+<g><rect x="94" y="409" width="32" height="32" rx="9" fill="#0b2545" stroke="#fff" stroke-width="3"/><text x="110" y="431" text-anchor="middle" font-size="16" font-weight="800" fill="#fff">B</text></g>
+<g transform="translate(384 150)"><g class="lp-pin"><ellipse cx="0" cy="2" rx="14" ry="5" fill="#000" opacity=".3"/><path d="M0 0 C-20 -28 -30 -40 -30 -56 a30 30 0 1 1 60 0 c0 16 -10 28 -30 56z" fill="#ef4444" stroke="#fff" stroke-width="3"/><circle cx="0" cy="-56" r="20" fill="#fff"/><path d="M-4.5 -68h9v8h8v9h-8v8h-9v-8h-8v-9h8z" fill="#ef4444"/></g></g>
+<g transform="translate(112 232)"><g class="lp-pin lp-d2"><ellipse cx="0" cy="2" rx="12" ry="4" fill="#000" opacity=".3"/><path d="M0 0 C-17 -24 -25 -34 -25 -47 a25 25 0 1 1 50 0 c0 13 -8 23 -25 47z" fill="#3b82f6" stroke="#fff" stroke-width="3"/><circle cx="0" cy="-47" r="17" fill="#fff"/><path d="M-4 -58h8v3l4.5 9.5a3 3 0 0 1-2.7 4.2h-11.6a3 3 0 0 1-2.7-4.2L-4 -55z" fill="#3b82f6"/><path d="M-6 -58h12" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/></g></g>
+<g><animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.92;1" calcMode="linear"><mpath href="#lprt"/></animateMotion>
+<g transform="translate(-15 -22)"><rect x="0" y="6" width="24" height="15" rx="3" fill="#fff"/><path d="M24 10h6l4 5v6H24z" fill="#e2e8f0"/><rect x="6.5" y="10" width="2.6" height="7" fill="#ef4444"/><rect x="4.3" y="12.2" width="7" height="2.6" fill="#ef4444"/><circle cx="8" cy="22" r="3.4" fill="#0b2545" stroke="#fff" stroke-width="1.5"/><circle cx="28" cy="22" r="3.4" fill="#0b2545" stroke="#fff" stroke-width="1.5"/></g></g>
+<g transform="translate(6 10)" filter="url(#lpsh)"><rect width="200" height="128" rx="18" fill="#fff"/><text x="24" y="32" font-size="13.5" font-weight="800" fill="#0b2545">Agenda projetada</text><text x="24" y="48" font-size="10.5" fill="#64748b">3 técnicos · 2 semanas</text><g transform="translate(0 0)"><rect x="24" y="60" width="26" height="18" rx="5" fill="#f59e0b" opacity="0.9"/><rect x="56" y="60" width="26" height="18" rx="5" fill="#0d9488" opacity="0.9"/><rect x="88" y="60" width="26" height="18" rx="5" fill="#3b82f6" opacity="0.9"/><rect x="120" y="60" width="26" height="18" rx="5" fill="#3b82f6" opacity="0.9"/><rect x="152" y="60" width="26" height="18" rx="5" fill="#e2e8f0" opacity="1"/><rect x="24" y="84" width="26" height="18" rx="5" fill="#3b82f6" opacity="0.9"/><rect x="56" y="84" width="26" height="18" rx="5" fill="#0d9488" opacity="0.9"/><rect x="88" y="84" width="26" height="18" rx="5" fill="#0d9488" opacity="0.9"/><rect x="120" y="84" width="26" height="18" rx="5" fill="#a855f7" opacity="0.9"/><rect x="152" y="84" width="26" height="18" rx="5" fill="#a855f7" opacity="0.9"/><rect x="24" y="108" width="26" height="18" rx="5" fill="#e2e8f0" opacity="1"/><rect x="56" y="108" width="26" height="18" rx="5" fill="#3b82f6" opacity="0.9"/><rect x="88" y="108" width="26" height="18" rx="5" fill="#a855f7" opacity="0.9"/><rect x="120" y="108" width="26" height="18" rx="5" fill="#e2e8f0" opacity="1"/><rect x="152" y="108" width="26" height="18" rx="5" fill="#e2e8f0" opacity="1"/></g></g>
+<g transform="translate(372 388)" filter="url(#lpsh)"><rect width="216" height="106" rx="18" fill="#fff"/><text x="20" y="30" font-size="13.5" font-weight="800" fill="#0b2545">Rota otimizada</text><g font-weight="800" font-size="18"><text x="20" y="64" fill="#0d9488">6</text><text x="72" y="64" fill="#0b2545">84 km</text><text x="150" y="64" fill="#3b82f6">7h20</text></g><g font-size="10.5" fill="#64748b"><text x="20" y="82">paradas</text><text x="72" y="82">distância</text><text x="150" y="82">jornada</text></g><rect x="20" y="92" width="176" height="4" rx="2" fill="#e2e8f0"/><rect x="20" y="92" width="118" height="4" rx="2" fill="#14b8a6"/></g>
+<text x="300" y="522" text-anchor="middle" font-size="11" fill="#fff" fill-opacity=".55">Ilustração com dados de exemplo</text>
+</svg></div>
+      </div>
+    </section>
+    <section class="lp-sec">
+      <div class="lp-wrap">
+        <div class="lp-tit"><span>O que você faz aqui</span><h2>Tudo para organizar as visitas técnicas em um só lugar</h2></div>
+        <div class="lp-cards"><article class="lp-card"><div class="lp-ic"><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="6" y="14" width="44" height="32" rx="7" fill="#ccfbf1"/><path d="M6 25l14-6 16 8 14-6v20a7 7 0 0 1-7 7H13a7 7 0 0 1-7-7z" fill="#5eead4" opacity=".65"/><path d="M28 39s-9-6.5-9-13a9 9 0 0 1 18 0c0 6.5-9 13-9 13z" fill="#0d9488"/><circle cx="28" cy="26" r="3.4" fill="#fff"/></svg></div><h3>Panorama no mapa</h3><p>Veja cada unidade atendida, colorida por cliente, região ou volume de visitas — com indicadores e gráficos do período.</p></article><article class="lp-card"><div class="lp-ic"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M7 11h42L33 30v14l-10 5V30z" fill="#0ea5e9"/><path d="M7 11h42l-3.5 4.4h-35z" fill="#0284c7"/><rect x="36" y="38" width="14" height="6" rx="3" fill="#f59e0b"/><rect x="40" y="47" width="12" height="5" rx="2.5" fill="#a855f7"/></svg></div><h3>Filtros combinados</h3><p>Cruze técnico, região, cliente, unidade, tipo de tarefa e datas. Tudo se atualiza na hora.</p></article><article class="lp-card"><div class="lp-ic"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M13 43C13 28 30 36 30 25S44 15 44 15" fill="none" stroke="#0d9488" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.5 8"/><circle cx="13" cy="43" r="9" fill="#0b2545"/><text x="13" y="47.5" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">B</text><path d="M43 33s-11-7.6-11-16a11 11 0 0 1 22 0c0 8.4-11 16-11 16z" fill="#ef4444"/><path d="M41.6 11.5h2.8v4.1H48.5v2.8h-4.1v4.1h-2.8v-4.1h-4.1v-2.8h4.1z" fill="#fff"/></svg></div><h3>Rotas de visitação</h3><p>Escolha um técnico e receba a melhor ordem das paradas, com horários, quilometragem e trajeto pelas vias.</p></article><article class="lp-card"><div class="lp-ic"><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="7" y="10" width="42" height="38" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><path d="M7 20h42V18a8 8 0 0 0-8-8H15a8 8 0 0 0-8 8z" fill="#3b82f6"/><rect x="16" y="6" width="4" height="10" rx="2" fill="#0b2545"/><rect x="36" y="6" width="4" height="10" rx="2" fill="#0b2545"/><g fill="#5eead4"><rect x="14" y="26" width="8" height="6" rx="2"/><rect x="24" y="26" width="8" height="6" rx="2"/><rect x="34" y="26" width="8" height="6" rx="2" fill="#f59e0b"/><rect x="14" y="36" width="8" height="6" rx="2" fill="#a855f7"/><rect x="24" y="36" width="8" height="6" rx="2"/></g><circle cx="42" cy="42" r="9" fill="#10b981"/><path d="M37.5 42l3.2 3.2 5-5.6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Projeção de agenda</h3><p>Selecione as datas e as equipes: o painel sugere quem visita o quê, respeitando jornada e proximidade.</p></article></div>
+      </div>
+    </section>
+    <section class="lp-sec alt">
+      <div class="lp-wrap">
+        <div class="lp-tit"><span>Quem atendemos</span><h2>Cada unidade no mapa, cada visita no lugar certo</h2><p>Hospitais, laboratórios, UPAs, clínicas, veterinárias e universidades: o painel reúne a atuação da equipe em uma visão só.</p></div>
+        <div class="lp-whos"><div class="lp-who"><div class="lp-ic sm"><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="9" y="16" width="38" height="34" rx="4" fill="#dbeafe"/><rect x="3" y="26" width="12" height="24" rx="3" fill="#bfdbfe"/><rect x="41" y="26" width="12" height="24" rx="3" fill="#bfdbfe"/><path d="M25 9h6v7h7v6h-7v7h-6v-7h-7v-6h7z" fill="#ef4444"/><rect x="21" y="38" width="14" height="12" rx="2" fill="#3b82f6"/><g fill="#fff"><rect x="12" y="33" width="5" height="5" rx="1"/><rect x="39" y="33" width="5" height="5" rx="1"/></g></svg></div><span>Hospitais</span></div><div class="lp-who"><div class="lp-ic sm"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M21 8h14v4h-3v10l12 20a6 6 0 0 1-5.2 9H17.2A6 6 0 0 1 12 42l12-20V12h-3z" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.4" stroke-linejoin="round"/><path d="M16.5 38h23l4 6.6a3 3 0 0 1-2.6 4.4H15.1a3 3 0 0 1-2.6-4.4z" fill="#0d9488"/><circle cx="24" cy="32" r="2.6" fill="#0d9488" opacity=".8"/><circle cx="32" cy="27" r="2" fill="#0284c7" opacity=".8"/></svg></div><span>Laboratórios</span></div><div class="lp-who"><div class="lp-ic sm"><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="4" y="18" width="34" height="24" rx="5" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><path d="M38 24h8l6 8v10H38z" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2" stroke-linejoin="round"/><path d="M15 22h6v5h5v6h-5v5h-6v-5h-5v-6h5z" fill="#ef4444"/><circle cx="16" cy="44" r="5.2" fill="#0b2545"/><circle cx="43" cy="44" r="5.2" fill="#0b2545"/><rect x="14" y="10" width="10" height="5" rx="2.5" fill="#3b82f6"/><rect x="26" y="10" width="10" height="5" rx="2.5" fill="#ef4444"/></svg></div><span>UPAs e emergências</span></div><div class="lp-who"><div class="lp-ic sm"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M14 8v14a10 10 0 0 0 20 0V8" fill="none" stroke="#0b2545" stroke-width="3.4" stroke-linecap="round"/><circle cx="14" cy="8" r="3" fill="#0d9488"/><circle cx="34" cy="8" r="3" fill="#0d9488"/><path d="M24 32v6a9 9 0 0 0 18 0v-4" fill="none" stroke="#0b2545" stroke-width="3.4" stroke-linecap="round"/><circle cx="42" cy="30" r="5" fill="#f59e0b" stroke="#0b2545" stroke-width="2.4"/></svg></div><span>Clínicas</span></div><div class="lp-who"><div class="lp-ic sm"><svg viewBox="0 0 56 56" aria-hidden="true"><g fill="#a855f7"><ellipse cx="14" cy="24" rx="5.4" ry="7" transform="rotate(-18 14 24)"/><ellipse cx="24" cy="15" rx="5.4" ry="7.4"/><ellipse cx="34" cy="15" rx="5.4" ry="7.4"/><ellipse cx="44" cy="24" rx="5.4" ry="7" transform="rotate(18 44 24)"/></g><path d="M29 27c-8 0-14 6.6-14 12.4 0 4 3.2 6.2 7 6.2 2.6 0 4.2-1.2 7-1.2s4.4 1.2 7 1.2c3.8 0 7-2.2 7-6.2C43 33.6 37 27 29 27z" fill="#c084fc"/></svg></div><span>Veterinárias</span></div><div class="lp-who"><div class="lp-ic sm"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M28 9L4 21l24 12 24-12z" fill="#0b2545"/><path d="M14 27v10c0 4 6.3 8 14 8s14-4 14-8V27L28 33z" fill="#3b82f6"/><path d="M50 22v14" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="39" r="3" fill="#f59e0b"/></svg></div><span>Universidades</span></div></div>
+      </div>
+    </section>
+    <section class="lp-sec">
+      <div class="lp-wrap">
+        <div class="lp-tit"><span>Como começar</span><h2>Três passos, poucos minutos</h2></div>
+        <ol class="lp-steps">
+          <li><b>Importe</b><p>Selecione a planilha de diligências. O painel organiza as unidades e as posiciona no mapa.</p></li>
+          <li><b>Explore</b><p>Use os filtros, veja indicadores, gráficos e o mapa. Corrija posições e vínculos, se precisar.</p></li>
+          <li><b>Planeje e compartilhe</b><p>Monte rotas, projete a agenda das equipes e exporte PDF profissional ou planilha Excel.</p></li>
+        </ol>
+        <div class="lp-priv"><div class="lp-ic sm"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M28 5l19 7v14c0 12-8 20-19 25C17 46 9 38 9 26V12z" fill="#0d9488"/><path d="M28 5l19 7v14c0 12-8 20-19 25z" fill="#14b8a6"/><path d="M19 27l6 6 12-13" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Seus dados ficam no seu computador</b><p>A planilha é processada localmente no navegador. Somente os endereços das unidades são consultados em serviços de mapas (localização e rotas), quando habilitado.</p></div></div>
+      </div>
+    </section>
+    <footer class="lp-foot"><span class="lg-plate sm"><span class="lg-slot"></span></span><span>© Grupo Labmedic · Diligências Técnicas</span></footer>
   </div>
 
   <!-- Dashboard -->
@@ -503,6 +635,10 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
       <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="setAuto" checked> Refinar localizações automaticamente após a importação</label>
       <small>As unidades entram no mapa imediatamente com posição aproximada (bairro/município) e são refinadas pelo endereço (1 consulta/s, com cache local). Requer internet.</small>
       <input type="email" id="setEmail" placeholder="e-mail de contato (opcional, boa prática para o Nominatim)"></div>
+    <div class="set-row"><b>Logomarca do Grupo</b>
+      <div class="logo-set"><div class="logo-prev" id="setLogoPrev"></div>
+        <div class="set-btns"><label class="btn sm" for="setLogoFile">Escolher imagem</label><input type="file" id="setLogoFile" accept="image/png,image/jpeg,image/svg+xml,image/webp" hidden><button class="btn sm" id="setLogoRm" type="button">Remover</button></div></div>
+      <small>Aparece na página inicial e na barra superior. Use PNG ou SVG (fundo transparente ou branco), até 2 MB. Fica salva neste navegador e entra no backup de ajustes.</small></div>
     <div class="set-row"><b>Endereço do tutorial (URL)</b>
       <input type="text" id="setTutUrl" placeholder="https://seu-site.com.br/Tutorial_Diligencias_Tecnicas.html">
       <small>Usado pelo botão “Tutorial” do topo, que abre em uma nova aba. Deixe em branco para usar o padrão (arquivo Tutorial_Diligencias_Tecnicas.html na mesma pasta/site deste painel).</small></div>
@@ -1373,12 +1509,12 @@ $('#setSave').addEventListener('click',()=>{
   if(chg&&S.tasks.length){ applyTechField(); ['tech'].forEach(k=>MS[k].clear(true)); S.plan=null; refresh(true); toast('Campo do técnico atualizado.'); }
 });
 $('#setExport').addEventListener('click',()=>{
-  download('ajustes_diligencias.json',new Blob([JSON.stringify({versao:1,client:S.ov.client,manual:S.ov.manual,geo:S.geoCache,settings:S.settings},null,1)],{type:'application/json'}));
+  download('ajustes_diligencias.json',new Blob([JSON.stringify({versao:1,client:S.ov.client,manual:S.ov.manual,geo:S.geoCache,settings:S.settings,logo:LS.get('lmdt_logo_v1','')},null,1)],{type:'application/json'}));
 });
 $('#setImportFile').addEventListener('change',async e=>{
   const f=e.target.files[0]; e.target.value=''; if(!f) return;
   try{ const j=JSON.parse(await f.text());
-    Object.assign(S.ov.client,j.client||{}); Object.assign(S.ov.manual,j.manual||{}); Object.assign(S.geoCache,j.geo||{}); saveOv(); saveGeo();
+    Object.assign(S.ov.client,j.client||{}); Object.assign(S.ov.manual,j.manual||{}); Object.assign(S.geoCache,j.geo||{}); saveOv(); saveGeo(); if(j.logo){ LS.set('lmdt_logo_v1',j.logo); applyLogo(); }
     if(S.tasks.length){ applyOverrides(); refresh(true); }
     toast('Ajustes importados.');
   }catch(err){ toast('Arquivo de ajustes inválido.'); }
@@ -2127,6 +2263,43 @@ $('#btnTutorial').addEventListener('click',()=>{
   const w=window.open(url,'_blank','noopener,noreferrer');
   if(!w) toast('O navegador bloqueou a nova aba. Permita pop-ups para este site e tente novamente.',5000);
 });
+
+/* =====================================================================
+   LOGOMARCA DO GRUPO  (página inicial, barra superior e Ajustes)
+   Para embutir a logomarca definitivamente, cole um data URI (PNG/SVG)
+   em LOGO_GRUPO_PADRAO. Enquanto estiver vazio, usa o texto "LABMEDIC"
+   ou a imagem escolhida em Ajustes → Logomarca do Grupo.
+   ===================================================================== */
+const LOGO_GRUPO_PADRAO='';
+const LOGO_WORD='<span class="lg-word"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 2h6v7h7v6h-7v7H9v-7H2V9h7z" fill="#0d9488"/></svg>LABMEDIC</span>';
+const logoSrc=()=>LS.get('lmdt_logo_v1','')||LOGO_GRUPO_PADRAO;
+function applyLogo(){
+  const src=logoSrc(), html=src?'<img alt="Grupo Labmedic" src="'+src.replace(/"/g,'&quot;')+'">':LOGO_WORD;
+  $$('.lg-slot').forEach(el=>{ el.innerHTML=html; });
+  const pv=$('#setLogoPrev'); if(pv) pv.innerHTML=html;
+  const tl=$('.topbar .logo'); if(tl){
+    if(!tl.dataset.orig) tl.dataset.orig=tl.innerHTML;
+    if(src){ tl.classList.add('has-logo'); tl.innerHTML='<img alt="Grupo Labmedic" src="'+src.replace(/"/g,'&quot;')+'">'; }
+    else { tl.classList.remove('has-logo'); tl.innerHTML=tl.dataset.orig; }
+  }
+}
+$('#setLogoFile').addEventListener('change',e=>{
+  const f=e.target.files[0]; e.target.value=''; if(!f) return;
+  if(!/^image\//.test(f.type)){ toast('Escolha um arquivo de imagem (PNG, SVG, JPG ou WebP).'); return; }
+  if(f.size>2*1024*1024){ toast('A imagem passa de 2 MB. Use uma versão menor.'); return; }
+  const rd=new FileReader();
+  rd.onload=()=>{
+    const done=uri=>{ LS.set('lmdt_logo_v1',uri); applyLogo(); toast('Logomarca atualizada.'); };
+    if(f.type==='image/svg+xml'){ done(rd.result); return; }
+    const im=new Image();
+    im.onload=()=>{ const s=Math.min(1,160/im.height,600/im.width), c=document.createElement('canvas'); c.width=Math.max(1,Math.round(im.width*s)); c.height=Math.max(1,Math.round(im.height*s)); c.getContext('2d').drawImage(im,0,0,c.width,c.height); done(c.toDataURL('image/png')); };
+    im.onerror=()=>toast('Não foi possível ler a imagem.'); im.src=rd.result;
+  };
+  rd.readAsDataURL(f);
+});
+$('#setLogoRm').addEventListener('click',()=>{ LS.del('lmdt_logo_v1'); applyLogo(); toast('Logomarca removida.'); });
+$('#lpTutorial').addEventListener('click',()=>$('#btnTutorial').click());
+applyLogo();
 
 /* ---------------- Inicialização ---------------- */
 initFilters();

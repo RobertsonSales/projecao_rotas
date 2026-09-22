@@ -583,6 +583,7 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
             <div id="pjDates" class="pj-chips"></div>
             <div class="pj-h">2 · Equipe e unidades</div>
             <label>Técnicos<div id="msPjTech"></div></label>
+            <div id="pjBaseWrap" style="display:none"><div class="pj-h" style="margin-top:0">Base operacional por técnico</div><div id="pjBaseBox" class="pj-chips" style="flex-direction:column;align-items:stretch;gap:8px"></div></div>
             <label>Unidades a visitar (escolha do operador)<div id="msPjUnits"></div></label>
             <label class="chk" id="pjMixRow"><input type="checkbox" id="pjMix"> Complementar com unidades vencidas do histórico</label>
             <div class="pj-mode" id="pjModeNote"></div>
@@ -1958,7 +1959,7 @@ $('#rptPrint').addEventListener('click',()=>{
 /* =====================================================================
    PROJEÇÃO DE ROTAS — planejamento futuro por técnico e datas
    ===================================================================== */
-const PJ={dates:new Set(),wd:[0,1,1,1,1,1,0],res:null,sel:{date:null,tech:null},file:'',rt:0};
+const PJ={dates:new Set(),wd:[0,1,1,1,1,1,0],res:null,sel:{date:null,tech:null},file:'',rt:0,baseOv:{}};
 const isoD=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const dObj=s=>new Date(s+'T12:00:00');
 const dayDiff=(a,b)=>Math.round((dObj(a)-dObj(b))/864e5);
@@ -2006,13 +2007,34 @@ function pjRefresh(){
   const have=new Set(uo.map(o=>o.v)); [...MS.pjUnits.sel].forEach(k=>{ if(!have.has(k)) MS.pjUnits.sel.delete(k); });
   MS.pjUnits.setOptions(uo,false); pjModeUpdate();
   if(PJ.file!==S.file){
-    PJ.file=S.file; PJ.res=null; PJ.sel={date:null,tech:null}; MS.pjUnits.setSel([]); pjModeUpdate();
+    PJ.file=S.file; PJ.res=null; PJ.sel={date:null,tech:null}; PJ.baseOv={}; MS.pjUnits.setSel([]); pjModeUpdate();
     const c90=pjCut(3), act=new Set(S.tasks.filter(t=>t.d>=c90).map(t=>t.tech));
     MS.pjTech.setSel([...act].filter(t=>cnt.has(t)));
     if(!PJ.dates.size) pjDefaultDates(); else pjRenderDates();
     pjHide();
   }
+  pjRenderBases();
 }
+function pjRenderBases(){
+  const box=$('#pjBaseBox'), wrap=$('#pjBaseWrap'); if(!box||!wrap) return;
+  const techs=[...MS.pjTech.sel];
+  const baseOpts=[...S.bases.values()].filter(b=>b.lat!=null);
+  if(!techs.length||!baseOpts.length){ wrap.style.display='none'; box.innerHTML=''; return; }
+  wrap.style.display='';
+  box.innerHTML=techs.map(t=>{
+    const autoId=techBaseId(t), auto=autoId?S.bases.get(autoId):null, cur=PJ.baseOv[t]||'';
+    return '<label style="display:flex;align-items:center;gap:8px;justify-content:space-between">'
+      +'<span style="min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+esc(t)+'">'+esc(t)+'</span>'
+      +'<select data-tech="'+esc(t)+'" style="max-width:58%">'
+      +'<option value="">Automático'+(auto?' ('+esc(auto.name)+')':'')+'</option>'
+      +baseOpts.map(b=>'<option value="'+esc(b.id)+'"'+(cur===b.id?' selected':'')+'>'+esc(b.name)+'</option>').join('')
+      +'</select></label>';
+  }).join('');
+}
+$('#pjBaseBox').addEventListener('change',e=>{
+  const sel=e.target.closest('select[data-tech]'); if(!sel) return;
+  const t=sel.dataset.tech; if(sel.value) PJ.baseOv[t]=sel.value; else delete PJ.baseOv[t];
+});
 function pjModeUpdate(){
   const n=MS.pjUnits.sel.size; $('#pjMixRow').style.display=n?'':'none';
   $('#pjModeNote').innerHTML=n?'<b>Planejamento manual:</b> as '+n+' unidade'+(n>1?'s':'')+' escolhida'+(n>1?'s':'')+' serão distribuídas entre os técnicos e as datas por proximidade (a afinidade por histórico não se aplica a elas). Cada unidade é visitada uma vez.':'<b>Modo automático:</b> nenhuma unidade escolhida — a projeção usa a frequência de visitas do histórico. Escolha unidades para planejar manualmente.';
@@ -2054,7 +2076,7 @@ function pjRun(){
   const firstLast=new Map(lastEff);
   const pending=new Set(forced);
   const fallbackBase=[...S.bases.values()].find(b=>b.lat!=null)||null;
-  const tinfo=techs.map((t,i)=>({t,color:PALETTE[i%PALETTE.length],base:S.bases.get(techBaseId(t))||fallbackBase}));
+  const tinfo=techs.map((t,i)=>({t,color:PALETTE[i%PALETTE.length],base:(PJ.baseOv[t]&&S.bases.get(PJ.baseOv[t]))||S.bases.get(techBaseId(t))||fallbackBase}));
   const elig=(d,t)=>!aff||d.techs.has(t)||forced.has(d.k);
   const scheduled=new Set(), days=[], tooFar=new Set();
   const build=(arr,ti)=>{ const day=dayFrom(arr,'',0,ti.base,round,start); estimateLegs(day); schedule(day); return day; };
@@ -2298,13 +2320,13 @@ $('#setLogoFile').addEventListener('change',e=>{
   rd.readAsDataURL(f);
 });
 $('#setLogoRm').addEventListener('click',()=>{ LS.del('lmdt_logo_v1'); applyLogo(); toast('Logomarca removida.'); });
-$('#lpTutorial').addEventListener('click',()=>$('#btnTutorial').click());
+const _lpTutorial=$('#lpTutorial'); if(_lpTutorial) _lpTutorial.addEventListener('click',()=>$('#btnTutorial').click());
 applyLogo();
 
 /* ---------------- Inicialização ---------------- */
 initFilters();
 MS.rtUnits=MultiSelect($('#msRtUnits'),{title:'Unidades',plural:'unidades',allLabel:'Todas as unidades do técnico'});
-MS.pjTech=MultiSelect($('#msPjTech'),{title:'Técnicos',plural:'técnicos',allLabel:'Nenhum selecionado'});
+MS.pjTech=MultiSelect($('#msPjTech'),{title:'Técnicos',plural:'técnicos',allLabel:'Nenhum selecionado',onChange:()=>pjRenderBases()});
 MS.pjUnits=MultiSelect($('#msPjUnits'),{title:'Unidades',plural:'unidades',allLabel:'Nenhuma (modo automático)',onChange:()=>pjModeUpdate()});
 pjModeUpdate();
 updateGeoStatus();

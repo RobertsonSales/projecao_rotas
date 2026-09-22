@@ -104,7 +104,7 @@ main{padding:18px 24px 40px;max-width:1800px;margin:0 auto}
 .kpi .v{font-size:26px;font-weight:800;color:var(--hd);margin-top:2px;letter-spacing:-.5px}
 .kpi .s{font-size:12px;color:var(--tx2)}
 .mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;margin-bottom:16px}
-#map,#rtMap{height:620px;border-radius:0 0 var(--r) var(--r);z-index:1}
+#map{height:620px;border-radius:0 0 var(--r) var(--r);z-index:1}
 .map-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 16px}
 .map-tools select{border:1px solid var(--line2);border-radius:8px;padding:6px 8px;background:var(--card)}
 .map-tools label{font-size:12.5px;color:var(--tx2);display:flex;align-items:center;gap:5px}
@@ -240,7 +240,11 @@ table.cl td:first-child{min-width:260px}
 @media (max-width:1100px){
   .mapwrap,.rt-layout{grid-template-columns:1fr}
   .rt-panel{position:static}
+  .pj-hbar{grid-template-columns:1fr 1fr}
   .topbar{flex-direction:column;align-items:flex-start}
+}
+@media (max-width:680px){
+  .pj-hbar{grid-template-columns:1fr}
 }
 @media print{
   @page{size:A4 landscape;margin:0}
@@ -259,9 +263,26 @@ table.cl td:first-child{min-width:260px}
 .rpt-map .bpin{border-radius:5px}
 @media print{ #reportScale{margin:0!important} .rpt-map{break-inside:avoid} }
 
-#pjMap{height:560px;border-radius:0 0 var(--r) var(--r);z-index:1}
+#pjMap{height:420px;border-radius:0 0 var(--r) var(--r);z-index:1}
+.pj-hbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px 22px;padding:16px;margin-bottom:16px;align-items:start}
+.pj-col{display:flex;flex-direction:column;gap:10px;min-width:0}
+.pj-col label{display:flex;flex-direction:column;gap:4px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);font-weight:700}
+.pj-col select,.pj-col input[type=number],.pj-col input[type=time]{border:1px solid var(--line2);border-radius:8px;padding:8px 9px;background:var(--card);font-weight:500;text-transform:none;letter-spacing:0;color:var(--tx)}
+.pj-col label.chk{flex-direction:row;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:13px;color:var(--tx2);font-weight:500}
+.pj-col .ms{min-width:0}
+.pj-col .ms-btn{height:38px}
+.pj-col .ms-panel{min-width:100%}
+.pj-checklist{display:flex;flex-direction:column;gap:1px;max-height:340px;overflow:auto;border:1px solid var(--line2);border-radius:8px;padding:6px;background:var(--card)}
+.pj-checklist label{flex-direction:row!important;align-items:center;gap:8px;text-transform:none!important;letter-spacing:0!important;font-size:13px;color:var(--tx2);font-weight:500!important;padding:5px 7px;border-radius:6px;cursor:pointer;margin:0}
+.pj-checklist label:hover{background:var(--soft2)}
+.pj-checklist label span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pj-checklist label em{font-style:normal;font-size:11px;color:var(--tx3)}
+.pj-checklist input{accent-color:var(--teal);flex:none}
+.pj-checklist .cl-empty{padding:10px;color:var(--tx3);font-size:12px;text-align:center}
+.pj-checklist .cl-actions{display:flex;justify-content:space-between;padding:2px 5px 6px;font-size:11.5px}
+.pj-checklist .cl-actions a{cursor:pointer;font-weight:700;color:var(--teal)}
 .pj-h{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--teal);font-weight:800;margin-top:6px;border-top:1px solid var(--line);padding-top:10px}
-.rt-panel .pj-h:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.rt-panel .pj-h:first-of-type,.pj-col .pj-h:first-of-type{border-top:0;padding-top:0;margin-top:0}
 .pj-range{display:flex;gap:6px;align-items:center}
 .pj-range input[type=date]{flex:1;min-width:0;border:1px solid var(--line2);border-radius:8px;padding:7px 8px;font-family:inherit}
 .pj-wd{display:flex;gap:4px}
@@ -458,7 +479,7 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
     <section class="lp-sec">
       <div class="lp-wrap">
         <div class="lp-tit"><span>O que você faz aqui</span><h2>Tudo para organizar as visitas técnicas em um só lugar</h2></div>
-        <div class="lp-cards"><article class="lp-card"><div class="lp-ic"><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="6" y="14" width="44" height="32" rx="7" fill="#ccfbf1"/><path d="M6 25l14-6 16 8 14-6v20a7 7 0 0 1-7 7H13a7 7 0 0 1-7-7z" fill="#5eead4" opacity=".65"/><path d="M28 39s-9-6.5-9-13a9 9 0 0 1 18 0c0 6.5-9 13-9 13z" fill="#0d9488"/><circle cx="28" cy="26" r="3.4" fill="#fff"/></svg></div><h3>Panorama no mapa</h3><p>Veja cada unidade atendida, colorida por cliente, região ou volume de visitas — com indicadores e gráficos do período.</p></article><article class="lp-card"><div class="lp-ic"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M7 11h42L33 30v14l-10 5V30z" fill="#0ea5e9"/><path d="M7 11h42l-3.5 4.4h-35z" fill="#0284c7"/><rect x="36" y="38" width="14" height="6" rx="3" fill="#f59e0b"/><rect x="40" y="47" width="12" height="5" rx="2.5" fill="#a855f7"/></svg></div><h3>Filtros combinados</h3><p>Cruze técnico, região, cliente, unidade, tipo de tarefa e datas. Tudo se atualiza na hora.</p></article><article class="lp-card"><div class="lp-ic"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M13 43C13 28 30 36 30 25S44 15 44 15" fill="none" stroke="#0d9488" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.5 8"/><circle cx="13" cy="43" r="9" fill="#0b2545"/><text x="13" y="47.5" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">B</text><path d="M43 33s-11-7.6-11-16a11 11 0 0 1 22 0c0 8.4-11 16-11 16z" fill="#ef4444"/><path d="M41.6 11.5h2.8v4.1H48.5v2.8h-4.1v4.1h-2.8v-4.1h-4.1v-2.8h4.1z" fill="#fff"/></svg></div><h3>Rotas de visitação</h3><p>Escolha um técnico e receba a melhor ordem das paradas, com horários, quilometragem e trajeto pelas vias.</p></article><article class="lp-card"><div class="lp-ic"><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="7" y="10" width="42" height="38" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><path d="M7 20h42V18a8 8 0 0 0-8-8H15a8 8 0 0 0-8 8z" fill="#3b82f6"/><rect x="16" y="6" width="4" height="10" rx="2" fill="#0b2545"/><rect x="36" y="6" width="4" height="10" rx="2" fill="#0b2545"/><g fill="#5eead4"><rect x="14" y="26" width="8" height="6" rx="2"/><rect x="24" y="26" width="8" height="6" rx="2"/><rect x="34" y="26" width="8" height="6" rx="2" fill="#f59e0b"/><rect x="14" y="36" width="8" height="6" rx="2" fill="#a855f7"/><rect x="24" y="36" width="8" height="6" rx="2"/></g><circle cx="42" cy="42" r="9" fill="#10b981"/><path d="M37.5 42l3.2 3.2 5-5.6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Projeção de agenda</h3><p>Selecione as datas e as equipes: o painel sugere quem visita o quê, respeitando jornada e proximidade.</p></article></div>
+        <div class="lp-cards"><article class="lp-card"><div class="lp-ic"><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="6" y="14" width="44" height="32" rx="7" fill="#ccfbf1"/><path d="M6 25l14-6 16 8 14-6v20a7 7 0 0 1-7 7H13a7 7 0 0 1-7-7z" fill="#5eead4" opacity=".65"/><path d="M28 39s-9-6.5-9-13a9 9 0 0 1 18 0c0 6.5-9 13-9 13z" fill="#0d9488"/><circle cx="28" cy="26" r="3.4" fill="#fff"/></svg></div><h3>Panorama no mapa</h3><p>Veja cada unidade atendida, colorida por cliente, região ou volume de visitas — com indicadores e gráficos do período.</p></article><article class="lp-card"><div class="lp-ic"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M7 11h42L33 30v14l-10 5V30z" fill="#0ea5e9"/><path d="M7 11h42l-3.5 4.4h-35z" fill="#0284c7"/><rect x="36" y="38" width="14" height="6" rx="3" fill="#f59e0b"/><rect x="40" y="47" width="12" height="5" rx="2.5" fill="#a855f7"/></svg></div><h3>Filtros combinados</h3><p>Cruze técnico, região, cliente, unidade, tipo de tarefa e datas. Tudo se atualiza na hora.</p></article><article class="lp-card"><div class="lp-ic"><svg viewBox="0 0 56 56" aria-hidden="true"><rect x="7" y="10" width="42" height="38" rx="8" fill="#fff" stroke="#cbd5e1" stroke-width="2"/><path d="M7 20h42V18a8 8 0 0 0-8-8H15a8 8 0 0 0-8 8z" fill="#3b82f6"/><rect x="16" y="6" width="4" height="10" rx="2" fill="#0b2545"/><rect x="36" y="6" width="4" height="10" rx="2" fill="#0b2545"/><g fill="#5eead4"><rect x="14" y="26" width="8" height="6" rx="2"/><rect x="24" y="26" width="8" height="6" rx="2"/><rect x="34" y="26" width="8" height="6" rx="2" fill="#f59e0b"/><rect x="14" y="36" width="8" height="6" rx="2" fill="#a855f7"/><rect x="24" y="36" width="8" height="6" rx="2"/></g><circle cx="42" cy="42" r="9" fill="#10b981"/><path d="M37.5 42l3.2 3.2 5-5.6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Projeção de agenda</h3><p>Selecione as datas e as equipes: o painel sugere quem visita o quê, respeitando jornada e proximidade.</p></article></div>
       </div>
     </section>
     <section class="lp-sec alt">
@@ -473,7 +494,7 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
         <ol class="lp-steps">
           <li><b>Importe</b><p>Selecione a planilha de diligências. O painel organiza as unidades e as posiciona no mapa.</p></li>
           <li><b>Explore</b><p>Use os filtros, veja indicadores, gráficos e o mapa. Corrija posições e vínculos, se precisar.</p></li>
-          <li><b>Planeje e compartilhe</b><p>Monte rotas, projete a agenda das equipes e exporte PDF profissional ou planilha Excel.</p></li>
+          <li><b>Planeje e compartilhe</b><p>Projete a agenda futura das equipes e exporte PDF profissional ou planilha Excel.</p></li>
         </ol>
         <div class="lp-priv"><div class="lp-ic sm"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M28 5l19 7v14c0 12-8 20-19 25C17 46 9 38 9 26V12z" fill="#0d9488"/><path d="M28 5l19 7v14c0 12-8 20-19 25z" fill="#14b8a6"/><path d="M19 27l6 6 12-13" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Seus dados ficam no seu computador</b><p>A planilha é processada localmente no navegador. Somente os endereços das unidades são consultados em serviços de mapas (localização e rotas), quando habilitado.</p></div></div>
       </div>
@@ -485,7 +506,6 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
   <div id="dash" class="hide">
     <nav class="tabs">
       <button class="tab on" data-tab="overview">Panorama</button>
-      <button class="tab" data-tab="routes">Rotas de visitação</button>
       <button class="tab" data-tab="proj">Projeção de rotas</button>
       <button class="tab" data-tab="units">Unidades</button>
     </nav>
@@ -535,79 +555,54 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
         </div>
       </section>
 
-      <!-- ROTAS -->
-      <section id="tab-routes" class="hide">
-        <div class="rt-layout">
-          <aside class="card rt-panel">
-            <h3>Parâmetros do roteiro</h3>
-            <label>Técnico<select id="rtTech"></select></label>
-            <label>Tipo de roteiro
-              <select id="rtMode">
-                <option value="day">Dia executado (histórico)</option>
-                <option value="plan">Roteiro planejado (unidades do técnico)</option>
-              </select></label>
-            <label id="rtDayBox">Data<select id="rtDate"></select></label>
-            <div id="rtPlanBox" class="hide" style="display:flex;flex-direction:column;gap:12px">
-              <label>Paradas por dia<input type="number" id="rtPerDay" min="1" max="12" value="6"></label>
-              <label>Unidades no roteiro<div id="msRtUnits"></div></label>
-            </div>
-            <label>Base de saída<select id="rtBase"></select></label>
-            <label>Horário de saída<input type="time" id="rtStart" value="08:00"></label>
-            <label class="chk"><input type="checkbox" id="rtRound" checked> Retornar à base ao final</label>
-            <label class="chk"><input type="checkbox" id="rtRoads" checked> Traçar pelas vias (OSRM online)</label>
-            <button class="btn primary" id="rtBuild" style="justify-content:center">Gerar roteiro</button>
-            <button class="btn" id="rtPdf" style="justify-content:center" disabled>Exportar PDF · A4 paisagem</button>
-            <div class="rt-note" id="rtNote">Selecione o técnico e gere o roteiro. A ordem das paradas é otimizada a partir da base (menor deslocamento). Os filtros do topo (período, região, cliente…) delimitam as unidades disponíveis.</div>
-          </aside>
-          <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
-            <div class="card">
-              <div class="card-h"><h3 id="rtTitle">Mapa de rotas</h3><small id="rtSub"></small></div>
-              <div class="daytabs" id="rtTabs"></div>
-              <div id="rtMap"></div>
-            </div>
-            <div class="card" id="rtSummary"><div class="empty-msg">Nenhum roteiro gerado.</div></div>
-          </div>
-        </div>
-      </section>
-
       <!-- PROJEÇÃO -->
       <section id="tab-proj" class="hide">
-        <div class="rt-layout">
-          <aside class="card rt-panel">
-            <h3>Parâmetros da projeção</h3>
-            <div class="pj-h">1 · Datas de atuação</div>
+        <div class="card pj-hbar">
+          <div class="pj-col">
+            <div class="pj-h" style="margin-top:0">Equipe</div>
+            <label style="margin-bottom:-2px">Técnicos <small style="text-transform:none;font-weight:500;color:var(--tx3)">(nenhum marcado = todos)</small></label>
+            <div id="msPjTech"></div>
+            <div id="pjBaseWrap" style="display:none"><div class="pj-h" style="margin-top:0">Base operacional por técnico</div><div id="pjBaseBox" class="pj-chips" style="flex-direction:column;align-items:stretch;gap:8px;max-height:260px"></div></div>
+          </div>
+          <div class="pj-col">
+            <div class="pj-h" style="margin-top:0">Unidades</div>
+            <label>Unidades a visitar (escolha do operador)<div id="msPjUnits"></div></label>
+            <div id="pjTipoWrap" style="display:none"><div class="pj-h" style="margin-top:0">Motivo da visita por unidade</div><div id="pjTipoBox" class="pj-chips" style="flex-direction:column;align-items:stretch;gap:8px"></div></div>
+            <label class="chk" id="pjMixRow"><input type="checkbox" id="pjMix"> Complementar com unidades vencidas do histórico</label>
+          </div>
+          <div class="pj-col" id="pjDatesCol" style="display:none">
+            <div class="pj-h" style="margin-top:0">Datas de atuação</div>
             <div class="pj-range"><input type="date" id="pjFrom"><input type="date" id="pjTo"></div>
             <div class="pj-wd" id="pjWd"></div>
             <div class="pj-btns"><button class="btn sm" id="pjGen">Adicionar período</button><button class="btn sm" id="pjClear">Limpar datas</button></div>
             <div class="pj-range"><input type="date" id="pjOne"><button class="btn sm" id="pjAddOne">+ Data avulsa</button></div>
             <div id="pjDates" class="pj-chips"></div>
-            <div class="pj-h">2 · Equipe e unidades</div>
-            <label>Técnicos<div id="msPjTech"></div></label>
-            <div id="pjBaseWrap" style="display:none"><div class="pj-h" style="margin-top:0">Base operacional por técnico</div><div id="pjBaseBox" class="pj-chips" style="flex-direction:column;align-items:stretch;gap:8px"></div></div>
-            <label>Unidades a visitar (escolha do operador)<div id="msPjUnits"></div></label>
-            <div id="pjTipoWrap" style="display:none"><div class="pj-h" style="margin-top:0">Motivo da visita por unidade</div><div id="pjTipoBox" class="pj-chips" style="flex-direction:column;align-items:stretch;gap:8px"></div></div>
-            <label class="chk" id="pjMixRow"><input type="checkbox" id="pjMix"> Complementar com unidades vencidas do histórico</label>
-            <div class="pj-mode" id="pjModeNote"></div>
-            <label>Histórico de referência<select id="pjWin"><option value="6">Últimos 6 meses</option><option value="12" selected>Últimos 12 meses</option><option value="18">Últimos 18 meses</option></select></label>
-            <label class="chk"><input type="checkbox" id="pjAff" checked> Automático: só unidades já atendidas pelo técnico</label>
-            <div class="pj-h">3 · Capacidade do dia</div>
+          </div>
+          <div class="pj-col">
+            <div class="pj-h" style="margin-top:0">Capacidade do dia</div>
             <label>Paradas por dia (máx.)<input type="number" id="pjMax" min="1" max="12" value="6"></label>
             <label>Jornada máxima (horas)<input type="number" id="pjHours" min="2" max="14" step="0.5" value="9"></label>
             <label>Horário de saída<input type="time" id="pjStart" value="08:00"></label>
             <label class="chk"><input type="checkbox" id="pjRound" checked> Retornar à base ao final</label>
             <label class="chk"><input type="checkbox" id="pjRoads" checked> Traçar pelas vias (OSRM online)</label>
+          </div>
+          <div class="pj-col pj-col-actions">
+            <div class="pj-h" style="margin-top:0">Afinidade e ações</div>
+            <label>Histórico de referência<select id="pjWin"><option value="6">Últimos 6 meses</option><option value="12" selected>Últimos 12 meses</option><option value="18">Últimos 18 meses</option></select></label>
+            <label class="chk"><input type="checkbox" id="pjAff" checked> Automático: priorizar afinidade por equipamento</label>
+            <div class="pj-mode" id="pjModeNote"></div>
             <button class="btn primary" id="pjBuild" style="justify-content:center">Projetar rotas</button>
             <button class="btn" id="pjXlsx" style="justify-content:center" disabled>Exportar agenda (.xlsx)</button>
             <button class="btn" id="pjPdf" style="justify-content:center" disabled>Exportar PDF · A4 paisagem</button>
-            <div class="rt-note" id="pjNote"><b>Planejamento manual:</b> escolha as unidades e o sistema distribui as visitas entre os técnicos e as datas, por proximidade, respeitando paradas e jornada. <b>Automático:</b> sem unidades escolhidas, usa a <b>frequência típica</b> do histórico e prioriza as unidades <b>vencidas</b>.</div>
-          </aside>
-          <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
-            <div class="card" id="pjKpisBox"><div class="empty-msg">Escolha as datas e os técnicos e clique em “Projetar rotas”.</div></div>
-            <div class="card" id="pjGridBox" style="display:none"><div class="card-h"><h3>Agenda projetada</h3><small id="pjGridSub">Clique em uma data, técnico ou célula para ver as rotas</small></div><div class="tbl-wrap" style="max-height:440px;overflow:auto"><table class="pj-grid" id="pjGrid"></table></div></div>
-            <div class="card" id="pjMapBox" style="display:none"><div class="card-h"><h3 id="pjTitle">Mapa da projeção</h3><small id="pjSub"></small></div><div id="pjMap"></div></div>
-            <div class="card" id="pjDetail" style="display:none"></div>
-            <div class="card" id="pjBacklog" style="display:none"></div>
+            <div class="rt-note" id="pjNote"><b>Planejamento manual:</b> escolha as unidades e o sistema distribui as visitas entre os técnicos e as datas, por proximidade, respeitando paradas e jornada. <b>Automático:</b> sem unidades escolhidas, usa a <b>frequência de manutenção por tipo de equipamento</b> de cada técnico e prioriza as unidades <b>vencidas</b>.</div>
           </div>
+        </div>
+        <div class="card" id="pjMapBox" style="display:none"><div class="card-h"><h3 id="pjTitle">Mapa da projeção</h3><small id="pjSub"></small></div><div id="pjMap"></div></div>
+        <div style="display:flex;flex-direction:column;gap:16px;min-width:0;margin-top:16px">
+          <div class="card" id="pjKpisBox"><div class="empty-msg">Escolha os técnicos e clique em “Projetar rotas”.</div></div>
+          <div class="card" id="pjGridBox" style="display:none"><div class="card-h"><h3>Agenda projetada</h3><small id="pjGridSub">Clique em uma data, técnico ou célula para ver as rotas</small></div><div class="tbl-wrap" style="max-height:440px;overflow:auto"><table class="pj-grid" id="pjGrid"></table></div></div>
+          <div class="card" id="pjDetail" style="display:none"></div>
+          <div class="card" id="pjBacklog" style="display:none"></div>
         </div>
       </section>
 
@@ -666,6 +661,16 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
     <datalist id="clList"></datalist>
   </div>
   <div class="dlg-f"><button class="btn" id="clReset">Restaurar sugestões</button><button class="btn primary" id="clSave">Aplicar</button></div>
+</dialog>
+
+<!-- Seleção de técnicos para exportação -->
+<dialog id="dlgExport">
+  <div class="dlg-h"><h3 id="dlgExportTitle">Selecionar técnicos para exportação</h3><button class="btn sm" data-close>Fechar</button></div>
+  <div class="dlg-b">
+    <p style="margin-top:0;color:var(--tx2);font-size:13px">Escolha quais técnicos com agendamento na projeção atual entram no demonstrativo. Os demais ficam de fora deste arquivo, sem alterar a projeção em tela.</p>
+    <div id="expChecklist" class="pj-checklist" style="max-height:360px"></div>
+  </div>
+  <div class="dlg-f"><button class="btn" id="expCancel" data-close>Cancelar</button><button class="btn primary" id="expConfirm">Exportar</button></div>
 </dialog>
 
 <!-- Relatório PDF -->
@@ -973,8 +978,19 @@ const cleanName = s => String(s||'').replace(/\s*-\s*Removid[oa]\s*$/i,'').repla
 const COLMAP = {
   id:['codigo','cod','id'], date:['data','data da tarefa'], tipo:['tipo da tarefa','tipo'],
   from:['tarefa de'], resp:['responsavel','tecnico'], cli:['cliente','unidade'],
-  addr:['endereco'], base:['base'], dur:['duracao'], group:['grupo','rede','cliente principal','grupo cliente']
+  addr:['endereco'], base:['base'], dur:['duracao'], group:['grupo','rede','cliente principal','grupo cliente'],
+  equip:['equipamentos','equipamento']
 };
+function parseEquip(v){
+  if(v==null||v==='') return [];
+  return String(v).split(',').map(part=>{
+    part=part.trim(); if(!part) return null;
+    const i=part.lastIndexOf(' - ');
+    let model=i>=0?part.slice(i+3):part;
+    model=model.replace(/\s+/g,' ').trim();
+    return model||null;
+  }).filter(Boolean);
+}
 function parseRows(rows){
   let hi=-1;
   for(let i=0;i<Math.min(rows.length,60);i++){ const r=rows[i]||[]; const ns=r.map(norm); if(ns.includes('data')&&(ns.includes('cliente')||ns.includes('unidade'))){hi=i;break;} }
@@ -998,11 +1014,12 @@ function parseRows(rows){
       addr:col.addr>=0&&r[col.addr]?String(r[col.addr]).replace(/\s+/g,' ').trim():'',
       base:col.base>=0&&r[col.base]?String(r[col.base]).replace(/\s+/g,' ').trim():'',
       dur:col.dur>=0?parseDur(r[col.dur]):null,
-      grp:col.group>=0&&r[col.group]?String(r[col.group]).trim():''
+      grp:col.group>=0&&r[col.group]?String(r[col.group]).trim():'',
+      equip:col.equip>=0&&r[col.equip]?parseEquip(r[col.equip]):[]
     });
   }
   const dates=tasks.map(t=>t.d).sort();
-  return {tasks,bad,min:dates[0],max:dates[dates.length-1],hasGroup:col.group>=0};
+  return {tasks,bad,min:dates[0],max:dates[dates.length-1],hasGroup:col.group>=0,hasEquip:col.equip>=0};
 }
 
 /* ---------- Unidades ---------- */
@@ -1050,7 +1067,7 @@ function baseInfo(str){
   const loc=resolveLocation(str,str);
   return {id:'b'+hash(n),name:'Base '+(loc.cityName||str.slice(0,28)),addr:str,lat:loc.lat,lng:loc.lng,prec:loc.prec};
 }
-return {norm,titleCase,cleanAddr,parseRows,buildUnits,baseInfo,resolveLocation,deriveClient,toISO,parseDur,CITIES,BAIRROS,unitKey};
+return {norm,titleCase,cleanAddr,parseRows,parseEquip,buildUnits,baseInfo,resolveLocation,deriveClient,toISO,parseDur,CITIES,BAIRROS,unitKey};
 })();
 if(typeof module!=='undefined') module.exports=LM;
 </script>
@@ -1092,7 +1109,7 @@ const S={
   geoCache:LS.get('lmdt_geo_v1',{}),
   f:{from:'',to:'',tech:null,region:null,client:null,unit:null,tipo:null},
   view:[], agg:new Map(), colorBy:'client', edit:false, tab:'overview',
-  map:null, markers:new Map(), plan:null, rt:{sel:'all'}, charts:{}
+  map:null, markers:new Map(), charts:{}
 };
 
 /* ---------------- Seletor múltiplo ---------------- */
@@ -1134,6 +1151,29 @@ function MultiSelect(root,{title,onChange,allLabel='Todos',plural='selecionados'
     setSel(arr){ sel.clear(); arr.forEach(v=>sel.add(v)); label(); }
   };
 }
+/* ---------------- Seletor em lista vertical (checklist sempre visível) ---------------- */
+function Checklist(root,{onChange}={}){
+  root.classList.add('pj-checklist');
+  let opts=[]; const sel=new Set();
+  function render(){
+    if(!opts.length){ root.innerHTML='<div class="cl-empty">Nenhum item disponível</div>'; return; }
+    root.innerHTML='<div class="cl-actions"><a data-a="all">Marcar todos</a><a data-a="none">Limpar</a></div>'
+      +opts.map(o=>'<label><input type="checkbox" value="'+esc(o.v)+'"'+(sel.has(o.v)?' checked':'')+'><span title="'+esc(o.label)+'">'+esc(o.label)+'</span>'+(o.count==null?'':'<em>'+fmtInt(o.count)+'</em>')+'</label>').join('');
+  }
+  root.addEventListener('change',e=>{ const cb=e.target; if(cb.type!=='checkbox') return; cb.checked?sel.add(cb.value):sel.delete(cb.value); onChange&&onChange(sel); });
+  root.addEventListener('click',e=>{ const a=e.target.closest('a[data-a]'); if(!a) return;
+    if(a.dataset.a==='none') sel.clear(); else opts.forEach(o=>sel.add(o.v));
+    render(); onChange&&onChange(sel); });
+  return { sel, el:root,
+    setOptions(list_,keepSel=true){
+      opts=list_.slice();
+      if(keepSel){ const have=new Set(opts.map(o=>o.v)); sel.forEach(v=>{ if(!have.has(v)) opts.push({v,label:v,count:0}); }); }
+      render();
+    },
+    clear(silent){ sel.clear(); render(); if(!silent&&onChange) onChange(sel); },
+    setSel(arr){ sel.clear(); arr.forEach(v=>sel.add(v)); render(); }
+  };
+}
 document.addEventListener('click',()=>$$('.ms-panel').forEach(p=>p.classList.add('hide')));
 const MS={};
 
@@ -1160,7 +1200,7 @@ async function importFile(file){
 function loadData(res,fname){
   S.durBad=0; res.tasks.forEach(t=>{ if(t.dur!=null&&(t.dur<=0||t.dur>720)){ t.dur=null; S.durBad++; } });
   Geo.token++; Geo.q=[]; Geo.running=false; Geo.aborted=false; Geo.paused=false;
-  S.file=fname; S.tasks=res.tasks; S.plan=null; S.svcCache={};
+  S.file=fname; S.tasks=res.tasks; S.svcCache={};
   applyTechField();
   S.units=LM.buildUnits(S.tasks);
   S.byUnit=new Map(); S.tasks.forEach(t=>{ (S.byUnit.get(t.unit)||S.byUnit.set(t.unit,[]).get(t.unit)).push(t); });
@@ -1174,7 +1214,6 @@ function loadData(res,fname){
   $('#emptyState').classList.add('hide'); $('#dash').classList.remove('hide');
   const chip=$('#fileChip'); chip.classList.remove('hide'); chip.textContent=fname+' · '+fmtDate(res.min)+' a '+fmtDate(res.max);
   $('#btnClients').disabled=false;
-  rtFillBases();
   initMap();
   refresh(true);
   setTab(S.tab);
@@ -1234,7 +1273,7 @@ function refresh(fit){
   S.view=filterTasks(null);
   S.agg=aggregate(S.view);
   updateFacets();
-  renderSummary(); renderKPIs(); renderMap(!!fit); renderRank(); renderCharts(); renderUnitsTable(); rtRefresh(); pjRefresh();
+  renderSummary(); renderKPIs(); renderMap(!!fit); renderRank(); renderCharts(); renderUnitsTable(); pjRefresh();
 }
 function aggregate(view){
   const m=new Map();
@@ -1312,8 +1351,7 @@ function initMap(){
   S.baseLayer=L.layerGroup().addTo(S.map);
   S.map.on('popupopen',e=>{ const el=e.popup.getElement(); if(!el) return;
     $$('[data-act]',el).forEach(b=>b.onclick=()=>{ const k=b.dataset.k;
-      if(b.dataset.act==='only'){ MS.unit.setSel([k]); MS.client.clear(true); refresh(false); S.map.closePopup(); }
-      else if(b.dataset.act==='route'){ rtPickUnit(k); } }); });
+      if(b.dataset.act==='only'){ MS.unit.setSel([k]); MS.client.clear(true); refresh(false); S.map.closePopup(); } }); });
 }
 function topKey(m){ let bk=null,bv=-1; for(const [k,v] of m) if(v>bv){ bv=v; bk=k; } return bk; }
 function volColor(n,max){ const t=Math.sqrt(n/Math.max(1,max)); const s=[[191,227,245],[47,128,201],[11,37,69]]; const p=t*2, i=Math.min(1,Math.floor(p)), f=p-i; const c=s[i].map((x,j)=>Math.round(x+(s[i+1][j]-x)*f)); return 'rgb('+c.join(',')+')'; }
@@ -1334,7 +1372,7 @@ function popupHTML(u,a){
    +'<tr><td>Endereço</td><td>'+esc(u.addr||'—')+'</td></tr><tr><td>Diligências</td><td><b>'+fmtInt(a.n)+'</b> · última em '+fmtDate(a.last)+'</td></tr>'
    +'<tr><td>Duração média</td><td>'+(a.durN?fmtDur(a.dur/a.durN):'—')+'</td></tr><tr><td>Técnicos</td><td>'+techs+'</td></tr><tr><td>Tipos</td><td>'+tipos+'</td></tr>'
    +'<tr><td>Localização</td><td><span class="badge '+p[1]+'">'+p[0]+'</span></td></tr></table>'
-   +'<div class="acts"><button class="btn sm" data-act="only" data-k="'+esc(u.key)+'">Filtrar só esta unidade</button><button class="btn sm" data-act="route" data-k="'+esc(u.key)+'">Incluir em roteiro</button></div></div>';
+   +'<div class="acts"><button class="btn sm" data-act="only" data-k="'+esc(u.key)+'">Filtrar só esta unidade</button></div></div>';
 }
 function renderMap(fit){
   if(!S.map) return;
@@ -1406,10 +1444,9 @@ $('#btnExport').addEventListener('click',()=>{
 /* ---------------- Abas ---------------- */
 function setTab(t){
   S.tab=t; $('#filters').classList.toggle('pj-mode',t==='proj'); $$('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
-  ['overview','routes','proj','units'].forEach(x=>$('#tab-'+x).classList.toggle('hide',x!==t));
+  ['overview','proj','units'].forEach(x=>$('#tab-'+x).classList.toggle('hide',x!==t));
   if(t==='overview'&&S.map) setTimeout(()=>S.map.invalidateSize(),50);
   if(t==='proj'){ pjMapInit(); setTimeout(()=>{ if(S.pmap){ S.pmap.invalidateSize(); pjFit(); } },60); }
-  if(t==='routes'){ rtMapInit(); setTimeout(()=>{ if(S.rmap){ S.rmap.invalidateSize(); rtFit(); } },60); }
 }
 $$('.tab').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
 
@@ -1469,7 +1506,7 @@ function geoApply(it,res){
     if(res){ b.lat=res.lat; b.lng=res.lng; b.prec='exact'; S.geoCache['base:'+b.id]={lat:res.lat,lng:res.lng,kind:'addr',a:b.addr}; Geo.ok++; }
     else S.geoCache['base:'+b.id]={kind:'miss',a:b.addr};
   }
-  clearTimeout(Geo.timer); Geo.timer=setTimeout(()=>{ renderMap(false); renderUnitsTable(); if(S.plan) $('#rtNote').textContent='Localizações refinadas após a geração deste roteiro — gere novamente para usar as posições atualizadas.'; },1200);
+  clearTimeout(Geo.timer); Geo.timer=setTimeout(()=>{ renderMap(false); renderUnitsTable(); },1200);
 }
 async function geoRun(){
   if(Geo.running) return; Geo.running=true; const my=Geo.token; updateGeoStatus();
@@ -1508,7 +1545,7 @@ $('#setSave').addEventListener('click',()=>{
   const chg=S.settings.tech!==$('#setTech').value;
   S.settings.tech=$('#setTech').value; S.settings.auto=$('#setAuto').checked; S.settings.email=$('#setEmail').value.trim(); S.settings.tutorialUrl=$('#setTutUrl').value.trim(); saveSettings();
   $('#dlgSettings').close();
-  if(chg&&S.tasks.length){ applyTechField(); ['tech'].forEach(k=>MS[k].clear(true)); S.plan=null; refresh(true); toast('Campo do técnico atualizado.'); }
+  if(chg&&S.tasks.length){ applyTechField(); ['tech'].forEach(k=>MS[k].clear(true)); refresh(true); toast('Campo do técnico atualizado.'); }
 });
 $('#setExport').addEventListener('click',()=>{
   download('ajustes_diligencias.json',new Blob([JSON.stringify({versao:1,client:S.ov.client,manual:S.ov.manual,geo:S.geoCache,settings:S.settings,logo:LS.get('lmdt_logo_v1','')},null,1)],{type:'application/json'}));
@@ -1549,73 +1586,19 @@ $('#clReset').addEventListener('click',()=>{ if(!confirm('Restaurar todas as sug
 
 
 /* =====================================================================
-   ROTAS DE VISITAÇÃO
+   MOTOR DE ROTEIRIZAÇÃO (compartilhado pela Projeção de rotas)
    ===================================================================== */
-const RT={token:0,baseTouched:false};
+const RT={token:0};
 const ROAD_F=1.32, AVG_KMH=38;
 const estLeg=(a,b)=>{ const km=hav(a,b)*ROAD_F; return {km,min:km/AVG_KMH*60,est:true}; };
 const dayColor=i=>DAYCOL[i%DAYCOL.length];
-
-function rtFillBases(){
-  const arr=[...S.bases.values()].filter(b=>b.lat!=null);
-  $('#rtBase').innerHTML=arr.map(b=>'<option value="'+esc(b.id)+'">'+esc(b.name)+'</option>').join('')||'<option value="">(sem base localizada)</option>';
-  RT.baseTouched=false;
-}
 function techBaseId(tech){
   const m=new Map();
   S.tasks.forEach(t=>{ if(t.base&&(!tech||t.tech===tech)){ const id=LM.baseInfo(t.base).id; m.set(id,(m.get(id)||0)+1); } });
   return topKey(m);
 }
-function rtMode(){ return $('#rtMode').value; }
-function rtRefresh(){
-  if(!S.tasks.length||!MS.rtUnits) return;
-  const mode=rtMode(), tSel=$('#rtTech'), cur=tSel.value;
-  const techs=countBy(S.view,t=>t.tech);
-  let html=mode==='plan'?'<option value="">Todos os técnicos (unidades filtradas)</option>':'';
-  html+=techs.map(([t,n])=>'<option value="'+esc(t)+'">'+esc(t)+' · '+fmtInt(n)+'</option>').join('');
-  tSel.innerHTML=html||'<option value="">(sem dados nos filtros)</option>';
-  let val=cur;
-  if(!techs.some(e=>e[0]===val)&&!(mode==='plan'&&val==='')) val=(S.f.tech.size===1?[...S.f.tech][0]:(mode==='plan'?'':(techs[0]?techs[0][0]:'')));
-  if(!techs.some(e=>e[0]===val)&&!(mode==='plan'&&val==='')) val=techs[0]?techs[0][0]:'';
-  tSel.value=val;
-  const tv=tSel.value, vt=S.view.filter(t=>!tv||t.tech===tv);
-  // datas
-  const dm=new Map(); vt.forEach(t=>{ let s=dm.get(t.d); if(!s) dm.set(t.d,s=new Set()); s.add(t.unit); });
-  const dates=[...dm.keys()].sort().reverse(), dSel=$('#rtDate'), dcur=dSel.value;
-  dSel.innerHTML=dates.map(d=>'<option value="'+d+'">'+fmtDate(d)+' ('+DOW[new Date(d+'T12:00:00').getDay()]+') · '+dm.get(d).size+' unid.</option>').join('')||'<option value="">(sem datas)</option>';
-  dSel.value=dates.includes(dcur)?dcur:(dates[0]||'');
-  // unidades do plano
-  const um=new Map(); vt.forEach(t=>um.set(t.unit,(um.get(t.unit)||0)+1));
-  const uopts=[...um.entries()].map(([k,c])=>{ const u=S.units.get(k); return {v:k,label:u.name,count:c,group:u.client}; })
-    .sort((a,b)=>a.group.localeCompare(b.group,'pt-BR')||a.label.localeCompare(b.label,'pt-BR'));
-  [...MS.rtUnits.sel].forEach(k=>{ if(!um.has(k)) MS.rtUnits.sel.delete(k); });
-  MS.rtUnits.setOptions(uopts,false);
-  // base
-  if(!RT.baseTouched){ const b=techBaseId(tv); if(b&&[...$('#rtBase').options].some(o=>o.value===b)) $('#rtBase').value=b; }
-  $('#rtDayBox').classList.toggle('hide',mode!=='day');
-  $('#rtPlanBox').classList.toggle('hide',mode!=='plan');
-}
-$('#rtMode').addEventListener('change',()=>{ rtRefresh(); });
-$('#rtTech').addEventListener('change',()=>{ RT.baseTouched=false; rtRefresh(); });
-$('#rtBase').addEventListener('change',()=>{ RT.baseTouched=true; });
 
-/* ---- mapa ---- */
-function rtMapInit(){
-  if(S.rmap||typeof L==='undefined') return;
-  const c=TILES.carto();
-  S.rmap=L.map('rtMap',{layers:[c]}).setView([-22.75,-43.1],9);
-  L.control.layers({'Mapa base':c,'OpenStreetMap':TILES.osm(),'Satélite':TILES.sat()},null,{position:'topright'}).addTo(S.rmap);
-  L.control.scale({imperial:false}).addTo(S.rmap);
-  S.rlayer=L.layerGroup().addTo(S.rmap);
-}
-function rtFit(){
-  if(!S.rmap||!S.rlayer) return;
-  const pts=[]; S.rlayer.eachLayer(l=>{ if(l.getLatLng) pts.push(l.getLatLng()); else if(l.getBounds&&l.getBounds().isValid()){ const b=l.getBounds(); pts.push(b.getSouthWest(),b.getNorthEast()); } });
-  if(pts.length) S.rmap.fitBounds(L.latLngBounds(pts).pad(0.1),{maxZoom:15,animate:false});
-}
-
-/* ---- construção do roteiro ---- */
-function getBase(){ return S.bases.get($('#rtBase').value)||null; }
+/* ---- construção de roteiros ---- */
 function ptOf(x){ return {lat:x.lat,lng:x.lng}; }
 function routeLen(order,pts,base,round){
   let d=0,prev=base||null;
@@ -1643,29 +1626,6 @@ function unitSvc(k,tasksDay){
   return Math.max(10,Math.round(all.length?median(all):S.gMedian));
 }
 function topTipos(tasks,n){ return countBy(tasks,t=>LM.titleCase(t.tipo)).slice(0,n).map(e=>e[0]); }
-function mkStop(k,tasksDay,techFilter){
-  const u=S.units.get(k);
-  const hist=(S.byUnit.get(k)||[]).filter(t=>!techFilter||t.tech===techFilter);
-  const src=tasksDay||(hist.length?hist:(S.byUnit.get(k)||[]));
-  return {k,u,svc:unitSvc(k,tasksDay),tipos:topTipos(src,2),n:tasksDay?tasksDay.length:hist.length};
-}
-function splitDays(keys,perDay,base){
-  const pts=new Map(keys.map(k=>{ const u=S.units.get(k); return [k,{lat:u.lat,lng:u.lng}]; }));
-  const left=new Set(keys), days=[], ref=base||{lat:[...pts.values()][0].lat,lng:[...pts.values()][0].lng};
-  while(left.size){
-    let seed=null,sd=-1; for(const k of left){ const d=hav(ref,pts.get(k)); if(d>sd){ sd=d; seed=k; } }
-    const grp=[seed]; left.delete(seed);
-    while(grp.length<perDay&&left.size){
-      let bk=null,bd=1e9; for(const k of left){ let d=1e9; for(const g of grp){ d=Math.min(d,hav(pts.get(g),pts.get(k))); } if(d<bd){ bd=d; bk=k; } }
-      grp.push(bk); left.delete(bk);
-    }
-    days.push(grp);
-  }
-  // ordena os dias do mais próximo ao mais distante da base
-  const cen=g=>({lat:g.reduce((s,k)=>s+pts.get(k).lat,0)/g.length,lng:g.reduce((s,k)=>s+pts.get(k).lng,0)/g.length});
-  days.sort((a,b)=>hav(ref,cen(a))-hav(ref,cen(b)));
-  return days;
-}
 function dayFrom(stopsArr,label,i,base,round,startMin){
   const pts=stopsArr.map(s=>ptOf(s.u));
   const ord=optimize(pts,base,round);
@@ -1705,65 +1665,9 @@ async function osrmDay(day,token){
   day.legs=r.legs.map(l=>({km:l.distance/1000,min:l.duration/60,est:false}));
   day.geo=r.geometry.coordinates.map(c=>[c[1],c[0]]); day.road=true; return true;
 }
-async function roadsFor(days,token){
-  if(!$('#rtRoads').checked) return;
-  let ok=0; const todo=days.filter(d=>!d.road);
-  for(let i=0;i<todo.length;i++){
-    if(token!==RT.token) return;
-    $('#rtNote').textContent='Traçando rotas pelas vias… ('+(i+1)+'/'+todo.length+')';
-    const good=await osrmDay(todo[i],token); if(token!==RT.token) return;
-    if(good){ ok++; schedule(todo[i]); rtRender(); }
-    await sleep(120);
-  }
-  if(token!==RT.token) return;
-  $('#rtNote').textContent=ok===todo.length&&todo.length?'Rotas traçadas pelas vias (OSRM). Distâncias e tempos de deslocamento reais de trânsito livre; não inclui pausas.':
-    (ok?'Parte dos dias foi traçada pelas vias; os demais usam estimativa por distância.':'Serviço de rotas indisponível: exibindo trajetos em linha reta com distâncias estimadas (×'+ROAD_F+') e velocidade média de '+AVG_KMH+' km/h.');
-}
+function tot(days){ return days.reduce((a,d)=>({stops:a.stops+d.stops.length,km:a.km+d.km,trav:a.trav+d.trav,svc:a.svc+d.svcT,total:a.total+d.total}),{stops:0,km:0,trav:0,svc:0,total:0}); }
 
-async function rtBuild(){
-  if(!S.tasks.length) return;
-  const token=++RT.token, mode=rtMode(), tech=$('#rtTech').value, base=getBase(), round=$('#rtRound').checked, start=toMin($('#rtStart').value);
-  let days=[], warn=[];
-  if(mode==='day'){
-    const d=$('#rtDate').value; if(!d||!tech){ toast('Selecione técnico e data.'); return; }
-    const tasks=S.view.filter(t=>t.tech===tech&&t.d===d), by=new Map();
-    tasks.forEach(t=>{ (by.get(t.unit)||by.set(t.unit,[]).get(t.unit)).push(t); });
-    const stops=[]; let miss=0;
-    by.forEach((arr,k)=>{ const u=S.units.get(k); if(u.lat==null){ miss++; return; } stops.push(mkStop(k,arr,tech)); });
-    if(miss) warn.push(miss+' unidade(s) sem localização foram ignoradas.');
-    if(!stops.length){ toast('Nenhuma unidade localizada nesta data.'); return; }
-    days=[dayFrom(stops,fmtDate(d)+' · '+DOW[new Date(d+'T12:00:00').getDay()],0,base,round,start)];
-  }else{
-    let keys=[...MS.rtUnits.sel]; if(!keys.length) keys=[...new Set(S.view.filter(t=>!tech||t.tech===tech).map(t=>t.unit))];
-    const miss=keys.filter(k=>S.units.get(k).lat==null).length; keys=keys.filter(k=>S.units.get(k).lat!=null);
-    if(miss) warn.push(miss+' unidade(s) sem localização foram ignoradas.');
-    if(!keys.length){ toast('Nenhuma unidade localizada para o roteiro.'); return; }
-    const per=Math.max(1,Math.min(12,parseInt($('#rtPerDay').value)||6));
-    const groups=splitDays(keys,per,base);
-    days=groups.map((g,i)=>dayFrom(g.map(k=>mkStop(k,null,tech)),'Dia '+(i+1),i,base,round,start));
-    if(days.length>16) warn.push('O roteiro tem '+days.length+' dias; considere aumentar as paradas por dia ou filtrar por região/cliente.');
-  }
-  const approx=days.reduce((s,d)=>s+d.stops.filter(x=>['bairro','cidade','none'].includes(x.u.prec)).length,0);
-  if(approx) warn.push(approx+' parada(s) com localização aproximada (bairro/município) — o trajeto pode variar; use “Editar posições” no Panorama ou aguarde a geocodificação.');
-  if(!base) warn.push('Nenhuma base localizada: o trajeto inicia na primeira parada.');
-  days.forEach(d=>{ estimateLegs(d); schedule(d); });
-  S.plan={mode,tech,days,warn,base,round,start,at:new Date()};
-  S.rt.sel=days.length>1?'all':0;
-  $('#rtNote').textContent='Roteiro gerado.'; $('#rtPdf').disabled=false;
-  rtRender(true);
-  roadsFor(days,token);
-}
-$('#rtBuild').addEventListener('click',rtBuild);
-
-function rtPickUnit(k){
-  const u=S.units.get(k); if(!u) return;
-  $('#rtMode').value='plan'; $('#rtTech').value=''; rtRefresh();
-  MS.rtUnits.setSel([...MS.rtUnits.sel,k]);
-  setTab('routes'); toast('“'+u.name+'” incluída no roteiro planejado. Ajuste os parâmetros e clique em “Gerar roteiro”.',5000);
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-/* ---- desenho ---- */
+/* ---- desenho no mapa ---- */
 function bearing(a,b){ const r=Math.PI/180, y=Math.sin((b[1]-a[1])*r)*Math.cos(b[0]*r), x=Math.cos(a[0]*r)*Math.sin(b[0]*r)-Math.sin(a[0]*r)*Math.cos(b[0]*r)*Math.cos((b[1]-a[1])*r); return (Math.atan2(y,x)*180/Math.PI+360)%360; }
 function arrowsAlong(geo,count){
   if(!geo||geo.length<2) return [];
@@ -1794,48 +1698,6 @@ function drawRoute(map,layer,days,opt){
     m.addTo(layer);
   }));
 }
-function shownDays(){ if(!S.plan) return []; return S.rt.sel==='all'?S.plan.days:[S.plan.days[S.rt.sel]].filter(Boolean); }
-function rtRender(fit){
-  const P=S.plan; if(!P||!S.rmap) return;
-  S.rlayer.clearLayers(); const days=shownDays();
-  drawRoute(S.rmap,S.rlayer,days);
-  // abas
-  $('#rtTabs').innerHTML=(P.days.length>1?'<button class="daytab'+(S.rt.sel==='all'?' on':'')+'" data-i="all">Todos os dias</button>':'')
-    +P.days.map((d,i)=>'<button class="daytab'+(S.rt.sel===i?' on':'')+'" data-i="'+i+'"><i style="background:'+d.color+'"></i>'+esc(d.label)+' · '+d.stops.length+'</button>').join('');
-  const tt=(P.tech||'Todos os técnicos');
-  $('#rtTitle').textContent='Roteiro — '+tt;
-  $('#rtSub').textContent=(P.mode==='day'?'Dia executado':'Roteiro planejado')+' · '+P.days.length+' dia'+(P.days.length>1?'s':'')+' · base '+(P.base?P.base.name:'—');
-  rtSummary();
-  if(fit) setTimeout(()=>{ S.rmap.invalidateSize(); rtFit(); },40);
-}
-$('#rtTabs').addEventListener('click',e=>{ const b=e.target.closest('.daytab'); if(!b) return; S.rt.sel=b.dataset.i==='all'?'all':+b.dataset.i; rtRender(true); });
-function tot(days){ return days.reduce((a,d)=>({stops:a.stops+d.stops.length,km:a.km+d.km,trav:a.trav+d.trav,svc:a.svc+d.svcT,total:a.total+d.total}),{stops:0,km:0,trav:0,svc:0,total:0}); }
-function rtSummary(){
-  const P=S.plan, days=shownDays(), T=tot(days);
-  let h='<div class="rt-kpis">'
-   +[['Paradas',T.stops],['Dias',days.length],['Distância',fmt1(T.km)+' km'],['Deslocamento',fmtDur(T.trav)],['Em atendimento',fmtDur(T.svc)],['Jornada '+(days.length>1?'total':''),fmtDur(T.total)]].map(k=>'<div><span>'+k[0]+'</span><b>'+k[1]+'</b></div>').join('')+'</div>';
-  if(P.warn.length) h+=P.warn.map(w=>'<div class="warnbox">⚠ '+esc(w)+'</div>').join('');
-  h+=days.map(d=>{ const di=P.days.indexOf(d);
-    return '<div class="card-h" style="padding-top:6px"><h3><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:'+d.color+';margin-right:7px"></i>'+esc(d.label)+'</h3><small>saída '+fmtClock(d.start)+(d.ret!=null?' · retorno '+fmtClock(d.ret):' · término '+fmtClock(d.end))+' · '+fmt1(d.km)+' km'+(d.road?'':' (estimado)')+'</small></div>'
-    +'<div class="tbl-wrap" style="max-height:none"><table class="t"><thead><tr><th class="no">#</th><th class="no">Unidade</th><th class="no">Município / bairro</th><th class="no">Trecho</th><th class="no">Chegada</th><th class="no">Atend.</th><th class="no">Saída</th><th class="no">Atividades</th><th class="no">Ordem</th></tr></thead><tbody>'
-    +d.stops.map((s,i)=>'<tr data-d="'+di+'" data-i="'+i+'" style="cursor:pointer"><td><span class="badge" style="background:'+d.color+';color:#fff">'+(i+1)+'</span></td><td><b>'+esc(s.u.name)+'</b><br><small style="color:#94a3b8">'+esc(s.u.client)+'</small></td><td>'+esc(s.u.city)+(s.u.bairro?'<br><small style="color:#94a3b8">'+esc(s.u.bairro)+'</small>':'')+'</td><td>'+(s.leg?fmt1(s.leg.km)+' km<br><small style="color:#94a3b8">'+fmtDur(s.leg.min)+'</small>':'—')+'</td><td><b>'+fmtClock(s.arr)+'</b></td><td>'+fmtDur(s.svc)+'</td><td>'+fmtClock(s.dep)+'</td><td><small>'+esc(s.tipos.join(' · ')||'—')+'</small></td>'
-      +'<td class="ord-c"><span class="ord"><button data-mv="-1" title="Subir">▲</button><button data-mv="1" title="Descer">▼</button><button data-rm="1" title="Remover">✕</button></span></td></tr>').join('')
-    +(d.ret!=null?'<tr><td></td><td colspan="2" style="color:#64748b">Retorno à base — '+esc(d.base.name)+'</td><td>'+fmt1(d.retLeg.km)+' km<br><small style="color:#94a3b8">'+fmtDur(d.retLeg.min)+'</small></td><td><b>'+fmtClock(d.ret)+'</b></td><td colspan="4"></td></tr>':'')
-    +'</tbody></table></div>'; }).join('');
-  $('#rtSummary').innerHTML=h;
-}
-$('#rtSummary').addEventListener('click',async e=>{
-  const tr=e.target.closest('tr[data-d]'); if(!tr) return; const di=+tr.dataset.d, i=+tr.dataset.i, d=S.plan.days[di];
-  const mv=e.target.closest('button[data-mv]'), rm=e.target.closest('button[data-rm]');
-  if(mv||rm){
-    if(rm){ if(d.stops.length<=1){ toast('O dia precisa ter ao menos uma parada.'); return; } d.stops.splice(i,1); }
-    else { const j=i+(+mv.dataset.mv); if(j<0||j>=d.stops.length) return; [d.stops[i],d.stops[j]]=[d.stops[j],d.stops[i]]; }
-    const token=++RT.token; estimateLegs(d); schedule(d); rtRender(false);
-    if($('#rtRoads').checked){ const ok=await osrmDay(d,token); if(ok&&token===RT.token){ schedule(d); rtRender(false); } }
-    return;
-  }
-  const s=d.stops[i]; if(s&&S.rmap){ S.rmap.setView([s.u.lat,s.u.lng],Math.max(S.rmap.getZoom(),14)); window.scrollTo({top:document.getElementById('rtMap').getBoundingClientRect().top+scrollY-90,behavior:'smooth'}); }
-});
 
 
 /* =====================================================================
@@ -1863,7 +1725,7 @@ function clientChips(days,lim){ lim=lim||6; const s=new Map(); days.forEach(d=>d
 function mapBox(j){ return '<div class="rpt-map" data-j="'+j+'"></div>'; }
 
 function buildReport(P){
-  P=P||S.plan; const pages=[]; RPT.jobs=[]; const days=P.days;
+  const pages=[]; RPT.jobs=[]; const days=P.days;
   const baseName=P.base?P.base.name:([...new Set(P.days.map(d=>d.base&&d.base.name))].filter(Boolean).join(', ')||'—');
   const proj=P.mode==='proj';
   const totAll=tot(days);
@@ -1936,7 +1798,6 @@ function rptMaps(){
   });
   upd();
 }
-function rtPdf(){ if(!S.plan){ toast('Gere um roteiro antes de exportar.'); return; } openReport(S.plan); }
 function openReport(P){
   RPT.P=P;
   $('#reportPages').innerHTML=buildReport(P);
@@ -1944,11 +1805,10 @@ function openReport(P){
   $('#reportScale').style.transform='';
   rptMaps(); rptFitScale();
 }
-$('#rtPdf').addEventListener('click',rtPdf);
 $('#rptClose').addEventListener('click',()=>{ $('#reportOverlay').classList.add('hide'); RPT.maps.forEach(m=>{ try{ m.remove(); }catch(e){} }); RPT.maps=[]; $('#reportPages').innerHTML=''; });
 window.addEventListener('resize',()=>{ if(!$('#reportOverlay').classList.contains('hide')) rptFitScale(); });
 $('#rptPrint').addEventListener('click',()=>{
-  const P=RPT.P||S.plan, old=document.title;
+  const P=RPT.P, old=document.title;
   document.title='Roteiro_Visitacao_'+(P&&P.tech?P.tech.replace(/[^\wÀ-ú]+/g,'_'):'Geral')+'_'+new Date().toISOString().slice(0,10);
   RPT.maps.forEach(m=>m.invalidateSize());
   const restore=()=>{ document.title=old; window.removeEventListener('afterprint',restore); };
@@ -1960,7 +1820,7 @@ $('#rptPrint').addEventListener('click',()=>{
 /* =====================================================================
    PROJEÇÃO DE ROTAS — planejamento futuro por técnico e datas
    ===================================================================== */
-const PJ={dates:new Set(),wd:[0,1,1,1,1,1,0],res:null,sel:{date:null,tech:null},file:'',rt:0,baseOv:{},tipoOv:{}};
+const PJ={dates:new Set(),oneOff:new Set(),wd:[0,1,1,1,1,1,0],res:null,sel:{date:null,tech:null},file:'',rt:0,baseOv:{},tipoOv:{}};
 const isoD=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const dObj=s=>new Date(s+'T12:00:00');
 const dayDiff=(a,b)=>Math.round((dObj(a)-dObj(b))/864e5);
@@ -1971,37 +1831,62 @@ const pjMaxDate=()=>S.tasks.reduce((m,t)=>t.d>m?t.d:m,'');
 const pjCut=months=>isoD(new Date(dObj(pjMaxDate()).getTime()-months*30.44*864e5));
 function techColorMap(){ const m=new Map(); const ts=PJ.res?PJ.res.techs:[...MS.pjTech.sel].map((t,i)=>({t})); ts.forEach((x,i)=>m.set(x.t,PALETTE[i%PALETTE.length])); return m; }
 
-/* ---- datas ---- */
+/* ---- datas ----
+   PJ.dates é sempre a união do período corrente do calendário (De/Até + dias da
+   semana marcados) com as datas avulsas adicionadas manualmente (PJ.oneOff).
+   Qualquer alteração no período recalcula a parte do calendário do zero — sem
+   acumular períodos anteriores — preservando apenas as avulsas. */
 function pjAutoTo(){
   const f=$('#pjFrom').value; if(!f) return;
   let to=isoD(new Date(dObj(f).getTime()+30*864e5)); const mx=S.tasks.length?pjMaxDate():'';
   if(mx&&mx>=f&&mx<to){ to=mx; toast('Data final limitada à última tarefa da planilha ('+fmtDate(mx)+').',4500); }
   $('#pjTo').value=to;
 }
-function pjDefaultDates(){ $('#pjFrom').value=isoD(new Date()); pjAutoTo(); PJ.dates=new Set(); pjGenDates(); }
-$('#pjFrom').addEventListener('change',()=>{ if(!$('#pjFrom').value) return; pjAutoTo(); PJ.dates.clear(); pjGenDates(); });
-function pjGenDates(){
-  const f=$('#pjFrom').value, t=$('#pjTo').value; if(!f||!t||t<f){ toast('Informe um período válido (De ≤ Até).'); return; }
-  let n=0; for(let d=dObj(f); isoD(d)<=t&&n<400; d=new Date(d.getTime()+864e5),n++){ if(PJ.wd[d.getDay()]) PJ.dates.add(isoD(d)); }
+function pjRangeSet(){
+  const f=$('#pjFrom').value, t=$('#pjTo').value, out=new Set();
+  if(!f||!t||t<f) return out;
+  let n=0; for(let d=dObj(f); isoD(d)<=t&&n<400; d=new Date(d.getTime()+864e5),n++){ if(PJ.wd[d.getDay()]) out.add(isoD(d)); }
+  return out;
+}
+function pjSyncRange(){
+  const f=$('#pjFrom').value, t=$('#pjTo').value;
+  if(!f||!t||t<f){ toast('Informe um período válido (De ≤ Até).'); return; }
+  PJ.dates=new Set([...pjRangeSet(),...PJ.oneOff]);
   pjRenderDates();
 }
+function pjDefaultDates(){ $('#pjFrom').value=isoD(new Date()); pjAutoTo(); PJ.oneOff=new Set(); pjSyncRange(); }
+$('#pjFrom').addEventListener('change',()=>{ if(!$('#pjFrom').value) return; pjAutoTo(); pjSyncRange(); });
+$('#pjTo').addEventListener('change',()=>{ if($('#pjFrom').value&&$('#pjTo').value) pjSyncRange(); });
 function pjRenderDates(){
   const arr=[...PJ.dates].sort();
-  $('#pjDates').innerHTML=arr.length?arr.map(d=>'<span>'+fmtDM(d)+'<b data-d="'+d+'" title="Remover">✕</b></span>').join(''):'<small style="color:#94a3b8">Nenhuma data selecionada.</small>';
+  $('#pjDates').innerHTML=arr.length?arr.map(d=>'<span>'+fmtDM(d)+(PJ.oneOff.has(d)?' <em style="opacity:.7">avulsa</em>':'')+'<b data-d="'+d+'" title="Remover">✕</b></span>').join(''):'<small style="color:#94a3b8">Nenhuma data selecionada.</small>';
   $$('#pjWd button').forEach(b=>b.classList.toggle('on',!!PJ.wd[+b.dataset.w]));
 }
 $('#pjWd').innerHTML=['D','S','T','Q','Q','S','S'].map((l,i)=>'<button type="button" data-w="'+i+'" title="'+['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'][i]+'">'+l+'</button>').join('');
-$('#pjWd').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; PJ.wd[+b.dataset.w]=PJ.wd[+b.dataset.w]?0:1; pjRenderDates(); });
-$('#pjGen').addEventListener('click',pjGenDates);
-$('#pjClear').addEventListener('click',()=>{ PJ.dates.clear(); pjRenderDates(); });
-$('#pjAddOne').addEventListener('click',()=>{ const v=$('#pjOne').value; if(v){ PJ.dates.add(v); pjRenderDates(); } });
-$('#pjDates').addEventListener('click',e=>{ const b=e.target.closest('b[data-d]'); if(b){ PJ.dates.delete(b.dataset.d); pjRenderDates(); } });
+$('#pjWd').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; PJ.wd[+b.dataset.w]=PJ.wd[+b.dataset.w]?0:1; pjSyncRange(); });
+$('#pjGen').addEventListener('click',pjSyncRange);
+$('#pjClear').addEventListener('click',()=>{ PJ.dates.clear(); PJ.oneOff.clear(); pjRenderDates(); });
+$('#pjAddOne').addEventListener('click',()=>{ const v=$('#pjOne').value; if(v){ PJ.oneOff.add(v); PJ.dates.add(v); pjRenderDates(); } });
+$('#pjDates').addEventListener('click',e=>{ const b=e.target.closest('b[data-d]'); if(b){ PJ.dates.delete(b.dataset.d); PJ.oneOff.delete(b.dataset.d); pjRenderDates(); } });
 
 /* ---- opções (equipe / unidades) ---- */
+function pjAllTechs(win){
+  const cut=pjCut(win), cnt=new Map();
+  S.tasks.forEach(t=>{ if(t.d>=cut) cnt.set(t.tech,(cnt.get(t.tech)||0)+1); });
+  return cnt;
+}
+function pjSyncDatesVisibility(){
+  const show=MS.pjTech.sel.size>0;
+  $('#pjDatesCol').style.display=show?'':'none';
+  if(show&&!PJ.dates.size) pjDefaultDates();
+}
+function pjTechChanged(){
+  pjRenderBases(); pjSyncDatesVisibility();
+  if(PJ.res) pjRun();
+}
 function pjRefresh(){
   if(!S.tasks.length||!MS.pjTech) return;
-  const win=parseInt($('#pjWin').value)||12, cut=pjCut(win), cnt=new Map();
-  S.tasks.forEach(t=>{ if(t.d>=cut) cnt.set(t.tech,(cnt.get(t.tech)||0)+1); });
+  const win=parseInt($('#pjWin').value)||12, cnt=pjAllTechs(win);
   MS.pjTech.setOptions([...cnt.entries()].sort((a,b)=>b[1]-a[1]).map(([v,c])=>({v,label:v,count:c})),true);
   const uo=[...S.units.values()].filter(u=>u.lat!=null).map(u=>({v:u.key,label:u.name,count:u.total,group:u.client}))
     .sort((a,b)=>a.group.localeCompare(b.group,'pt-BR')||a.label.localeCompare(b.label,'pt-BR'));
@@ -2009,9 +1894,8 @@ function pjRefresh(){
   MS.pjUnits.setOptions(uo,false); pjModeUpdate();
   if(PJ.file!==S.file){
     PJ.file=S.file; PJ.res=null; PJ.sel={date:null,tech:null}; PJ.baseOv={}; PJ.tipoOv={}; MS.pjUnits.setSel([]); pjModeUpdate();
-    const c90=pjCut(3), act=new Set(S.tasks.filter(t=>t.d>=c90).map(t=>t.tech));
-    MS.pjTech.setSel([...act].filter(t=>cnt.has(t)));
-    if(!PJ.dates.size) pjDefaultDates(); else pjRenderDates();
+    MS.pjTech.clear(true);
+    PJ.dates=new Set(); PJ.oneOff=new Set(); pjSyncDatesVisibility(); pjRenderDates();
     pjHide();
   }
   pjRenderBases();
@@ -2023,7 +1907,7 @@ function pjRenderBases(){
   if(!techs.length||!baseOpts.length){ wrap.style.display='none'; box.innerHTML=''; return; }
   wrap.style.display='';
   box.innerHTML=techs.map(t=>{
-    const autoId=techBaseId(t), auto=autoId?S.bases.get(autoId):null, cur=PJ.baseOv[t]||'';
+    const autoId=techBaseId(t)||'sulacap', auto=S.bases.get(autoId)||null, cur=PJ.baseOv[t]||'';
     return '<label style="display:flex;align-items:center;gap:8px;justify-content:space-between">'
       +'<span style="min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+esc(t)+'">'+esc(t)+'</span>'
       +'<select data-tech="'+esc(t)+'" style="max-width:58%">'
@@ -2059,14 +1943,25 @@ $('#pjTipoBox').addEventListener('change',e=>{
 });
 function pjModeUpdate(){
   const n=MS.pjUnits.sel.size; $('#pjMixRow').style.display=n?'':'none';
-  $('#pjModeNote').innerHTML=n?'<b>Planejamento manual:</b> as '+n+' unidade'+(n>1?'s':'')+' escolhida'+(n>1?'s':'')+' serão distribuídas entre os técnicos e as datas por proximidade (a afinidade por histórico não se aplica a elas). Cada unidade é visitada uma vez.':'<b>Modo automático:</b> nenhuma unidade escolhida — a projeção usa a frequência de visitas do histórico. Escolha unidades para planejar manualmente.';
+  $('#pjModeNote').innerHTML=n?'<b>Planejamento manual:</b> as '+n+' unidade'+(n>1?'s':'')+' escolhida'+(n>1?'s':'')+' serão distribuídas entre os técnicos e as datas por proximidade (a afinidade por equipamento não se aplica a elas). Cada unidade é visitada uma vez.':'<b>Modo automático:</b> nenhuma unidade escolhida — a projeção usa a frequência com que cada técnico atende determinado tipo de equipamento (Prime, Vida S3800 etc.), priorizando as unidades cujo equipamento é mais familiar ao perfil técnico de cada profissional. Escolha unidades para planejar manualmente.';
   pjRenderTipos();
 }
 $('#pjMix').addEventListener('change',()=>{});
-function pjHide(){ ['pjGridBox','pjMapBox','pjDetail','pjBacklog'].forEach(i=>$('#'+i).style.display='none'); $('#pjKpisBox').innerHTML='<div class="empty-msg">Escolha as datas e os técnicos e clique em “Projetar rotas”.</div>'; $('#pjXlsx').disabled=$('#pjPdf').disabled=true; }
+function pjHide(){ ['pjGridBox','pjMapBox','pjDetail','pjBacklog'].forEach(i=>$('#'+i).style.display='none'); $('#pjKpisBox').innerHTML='<div class="empty-msg">Escolha os técnicos e clique em “Projetar rotas”.</div>'; $('#pjXlsx').disabled=$('#pjPdf').disabled=true; }
 $('#pjWin').addEventListener('change',pjRefresh);
 
-/* ---- demanda histórica ---- */
+/* ---- demanda histórica e afinidade por equipamento ---- */
+function equipKey(label){ return norm(label); }
+function topEquip(tasks,n){
+  const m=new Map();
+  tasks.forEach(t=>(t.equip||[]).forEach(eq=>{ const key=equipKey(eq); const c=m.get(key); if(c) c.n++; else m.set(key,{key,label:LM.titleCase(eq),n:1}); }));
+  return [...m.values()].sort((a,b)=>b.n-a.n).slice(0,n);
+}
+function techEquipProfile(tech,win){
+  const cut=pjCut(win), m=new Map();
+  S.tasks.forEach(t=>{ if(t.tech!==tech||t.d<cut) return; (t.equip||[]).forEach(eq=>{ const key=equipKey(eq); m.set(key,(m.get(key)||0)+1); }); });
+  return m;
+}
 function pjDemand(win){
   const cut=pjCut(win), hist=new Map();
   S.tasks.forEach(t=>{ if(t.d<cut) return; let h=hist.get(t.unit); if(!h) hist.set(t.unit,h={days:new Set(),techs:new Map()}); h.days.add(t.d); h.techs.set(t.tech,(h.techs.get(t.tech)||0)+1); });
@@ -2081,17 +1976,24 @@ function pjDemand(win){
 }
 function mkDem(k,u,cad,vd,techs){
   const all=S.byUnit.get(k)||[]; let last=''; all.forEach(t=>{ if(t.d>last) last=t.d; });
-  return {k,u,cad,vd,techs,last,svc:unitSvc(k,null),tipos:topTipos(all,2)};
+  return {k,u,cad,vd,techs,last,svc:unitSvc(k,null),tipos:topTipos(all,2),equip:topEquip(all,4)};
 }
 
 /* ---- motor de projeção ---- */
 function pjRun(){
   if(!S.tasks.length) return;
-  const dates=[...PJ.dates].sort(), techs=[...MS.pjTech.sel];
+  const dates=[...PJ.dates].sort();
   if(!dates.length){ toast('Selecione ao menos uma data.'); return; }
-  if(!techs.length){ toast('Selecione ao menos um técnico.'); return; }
+  const win=parseInt($('#pjWin').value)||12;
+  let techs=[...MS.pjTech.sel], autoTechs=false;
+  if(!techs.length){
+    techs=[...pjAllTechs(win).keys()];
+    if(!techs.length){ toast('Não há técnicos com histórico no período de referência selecionado.'); return; }
+    autoTechs=true;
+    MS.pjTech.setSel(techs); pjRenderBases(); pjSyncDatesVisibility();
+  }
   const maxStops=Math.max(1,Math.min(12,parseInt($('#pjMax').value)||6)), maxMin=(parseFloat($('#pjHours').value)||9)*60;
-  const start=toMin($('#pjStart').value), round=$('#pjRound').checked, aff=$('#pjAff').checked, win=parseInt($('#pjWin').value)||12;
+  const start=toMin($('#pjStart').value), round=$('#pjRound').checked, aff=$('#pjAff').checked;
   const forced=new Set(MS.pjUnits.sel), manual=forced.size>0, mix=$('#pjMix').checked, hd=pjDemand(win);
   const dem=(manual&&!mix)?new Map([...hd].filter(([k])=>forced.has(k))):hd;
   forced.forEach(k=>{ if(!dem.has(k)){ const u=S.units.get(k); if(u&&u.lat!=null) dem.set(k,mkDem(k,u,30,0,new Map())); } });
@@ -2099,15 +2001,17 @@ function pjRun(){
   const lastEff=new Map(); dem.forEach(d=>lastEff.set(d.k,d.last||'2000-01-01'));
   const firstLast=new Map(lastEff);
   const pending=new Set(forced);
-  const fallbackBase=[...S.bases.values()].find(b=>b.lat!=null)||null;
+  const fallbackBase=S.bases.get('sulacap')||[...S.bases.values()].find(b=>b.lat!=null)||null;
   const tinfo=techs.map((t,i)=>({t,color:PALETTE[i%PALETTE.length],base:(PJ.baseOv[t]&&S.bases.get(PJ.baseOv[t]))||S.bases.get(techBaseId(t))||fallbackBase}));
-  const elig=(d,t)=>!aff||d.techs.has(t)||forced.has(d.k);
+  const profiles=new Map(techs.map(t=>[t,techEquipProfile(t,win)]));
+  const skillScore=(d,t)=>{ const prof=profiles.get(t); let s=0; d.equip.forEach(e=>{ s+=(prof.get(e.key)||0)*e.n; }); return s; };
+  const elig=(d,t)=>!aff||forced.has(d.k)||d.equip.some(e=>profiles.get(t).has(e.key));
   const scheduled=new Set(), days=[], tooFar=new Set();
   const build=(arr,ti)=>{ const day=dayFrom(arr,'',0,ti.base,round,start); estimateLegs(day); schedule(day); return day; };
   dates.forEach((D,di)=>{
     const taken=new Set(), order=tinfo.map((_,i)=>tinfo[(i+di)%tinfo.length]);
     for(const ti of order){
-      const ratio=d=>pending.has(d.k)?9:Math.min(3,dayDiff(D,lastEff.get(d.k))/d.cad);
+      const ratio=d=>{ const base=pending.has(d.k)?9:Math.min(3,dayDiff(D,lastEff.get(d.k))/d.cad); if(manual||!aff) return base; const sk=skillScore(d,ti.t); return base*(1+Math.min(1,sk/20)); };
       let pool=[...dem.values()].filter(d=>!taken.has(d.k)&&elig(d,ti.t)&&!(forced.has(d.k)&&scheduled.has(d.k))).map(d=>({d,r:ratio(d)})).filter(x=>x.r>=0.75);
       if(!pool.length) continue;
       const bp=ti.base?ptOf(ti.base):null;
@@ -2128,7 +2032,13 @@ function pjRun(){
         if(!ok) break;
       }
       const prevLast=new Map(cur.map(x=>[x.d.k,lastEff.get(x.d.k)]));
-      best.stops.forEach(s=>{ const was=prevLast.get(s.k); s.reason=pending.has(s.k)?'Escolhida pelo operador':'Última visita há '+fmtInt(dayDiff(D,was))+' dias · frequência típica ~'+dem.get(s.k).cad+' d'; s.last=was; s.cad=dem.get(s.k).cad; });
+      best.stops.forEach(s=>{ const was=prevLast.get(s.k), demK=dem.get(s.k);
+        const prof=profiles.get(ti.t), matched=demK.equip.filter(e=>prof.has(e.key));
+        const skillN=matched.reduce((sm,e)=>sm+(prof.get(e.key)||0),0);
+        const applies=aff&&!forced.has(s.k);
+        s.skillCount=applies?skillN:null; s.skillEquip=applies?matched.map(e=>e.label):[];
+        const eqTxt=(aff&&!manual&&demK.equip.length)?' · equipamento '+demK.equip.slice(0,2).map(e=>e.label).join('/')+' (afinidade do técnico)':'';
+        s.reason=pending.has(s.k)?'Escolhida pelo operador':'Última visita há '+fmtInt(dayDiff(D,was))+' dias · frequência típica ~'+demK.cad+' d'+eqTxt; s.last=was; s.cad=demK.cad; });
       cur.forEach(x=>{ taken.add(x.d.k); lastEff.set(x.d.k,D); pending.delete(x.d.k); scheduled.add(x.d.k); });
       best.tech=ti.t; best.date=D; best.label=fmtDM(D)+' · '+shortName(ti.t); best.color=ti.color;
       days.push(best);
@@ -2141,7 +2051,7 @@ function pjRun(){
   if(manual) overdueStart=(mix?[...new Set([...overdueStart,...forced])]:[...forced]).filter(k=>dem.has(k));
   dem.forEach(d=>{ const r=dayDiff(lastD,lastEff.get(d.k))/d.cad, pend=pending.has(d.k); if((r>=1&&!forced.has(d.k))||pend){
     const noTech=!pend&&!techs.some(t=>elig(d,t));
-    backlog.push({d,late:pend?0:Math.round(dayDiff(lastD,lastEff.get(d.k))-d.cad),reason:pend&&!tooFar.has(d.k)?'Escolhida, mas não coube na agenda: aumente datas, técnicos, paradas ou jornada':noTech?'Nenhum técnico selecionado atende esta unidade (histórico)':tooFar.has(d.k)?'Deslocamento a partir da base excede a jornada máxima':'Capacidade dos dias/técnicos selecionados esgotada'}); } });
+    backlog.push({d,late:pend?0:Math.round(dayDiff(lastD,lastEff.get(d.k))-d.cad),reason:pend&&!tooFar.has(d.k)?'Escolhida, mas não coube na agenda: aumente datas, técnicos, paradas ou jornada':noTech?'Nenhum técnico selecionado tem afinidade com o equipamento desta unidade':tooFar.has(d.k)?'Deslocamento a partir da base excede a jornada máxima':'Capacidade dos dias/técnicos selecionados esgotada'}); } });
   backlog.sort((a,b)=>b.late-a.late);
   const covered=overdueStart.filter(k=>scheduled.has(k)).length;
   PJ.res={days,dates,techs:tinfo,backlog,overdueStart:overdueStart.length,covered,params:{maxStops,maxMin,start,round,aff,win,manual,mix},built:new Date()};
@@ -2222,8 +2132,8 @@ function pjDetail(){
   const opts=R.days.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.tech.localeCompare(b.tech));
   $('#pjDetail').innerHTML=days.map(d=>{ const di=R.days.indexOf(d);
     return '<div class="card-h" style="padding-top:8px"><h3><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:'+d.color+';margin-right:7px"></i>'+esc(fmtDM(d.date))+' · '+esc(d.tech)+'</h3><small style="'+(d.total>maxMin+0.5?'color:#dc2626;font-weight:700':'')+'">saída '+fmtClock(d.start)+(d.ret!=null?' · retorno '+fmtClock(d.ret):' · término '+fmtClock(d.end))+' · jornada '+fmtDur(d.total)+' · '+fmt1(d.km)+' km'+(d.road?'':' (estimado)')+'</small></div>'
-    +'<div class="tbl-wrap" style="max-height:none"><table class="t"><thead><tr><th class="no">#</th><th class="no">Unidade</th><th class="no">Município / bairro</th><th class="no">Trecho</th><th class="no">Chegada</th><th class="no">Atend.</th><th class="no">Motivo da visita</th><th class="no">Ajustar</th></tr></thead><tbody>'
-    +d.stops.map((s,i)=>'<tr data-d="'+di+'" data-i="'+i+'"><td><span class="badge" style="background:'+d.color+';color:#fff">'+(i+1)+'</span></td><td><b>'+esc(s.u.name)+'</b><br><small style="color:#94a3b8">'+esc(s.u.client)+'</small></td><td>'+esc(s.u.city)+(s.u.bairro?'<br><small style="color:#94a3b8">'+esc(s.u.bairro)+'</small>':'')+'</td><td>'+(s.leg?fmt1(s.leg.km)+' km<br><small style="color:#94a3b8">'+fmtDur(s.leg.min)+'</small>':'—')+'</td><td><b>'+fmtClock(s.arr)+'</b><br><small style="color:#94a3b8">saída '+fmtClock(s.dep)+'</small></td><td>'+fmtDur(s.svc)+'</td><td><small>'+esc(s.reason||'')+'</small></td>'
+    +'<div class="tbl-wrap" style="max-height:none"><table class="t"><thead><tr><th class="no">#</th><th class="no">Unidade</th><th class="no">Município / bairro</th><th class="no">Trecho</th><th class="no">Chegada</th><th class="no">Atend.</th><th class="no">Motivo da visita</th><th class="no">Atend. ao equipamento</th><th class="no">Ajustar</th></tr></thead><tbody>'
+    +d.stops.map((s,i)=>'<tr data-d="'+di+'" data-i="'+i+'"><td><span class="badge" style="background:'+d.color+';color:#fff">'+(i+1)+'</span></td><td><b>'+esc(s.u.name)+'</b><br><small style="color:#94a3b8">'+esc(s.u.client)+'</small></td><td>'+esc(s.u.city)+(s.u.bairro?'<br><small style="color:#94a3b8">'+esc(s.u.bairro)+'</small>':'')+'</td><td>'+(s.leg?fmt1(s.leg.km)+' km<br><small style="color:#94a3b8">'+fmtDur(s.leg.min)+'</small>':'—')+'</td><td><b>'+fmtClock(s.arr)+'</b><br><small style="color:#94a3b8">saída '+fmtClock(s.dep)+'</small></td><td>'+fmtDur(s.svc)+'</td><td><small>'+esc(s.reason||'')+'</small></td><td>'+(s.skillCount!=null?'<b>'+fmtInt(s.skillCount)+'×</b>'+(s.skillEquip&&s.skillEquip.length?'<br><small style="color:#94a3b8" title="'+esc(s.skillEquip.join(', '))+'">'+esc(s.skillEquip.slice(0,2).join(' · '))+'</small>':''):'<span style="color:#94a3b8">—</span>')+'</td>'
       +'<td><span class="ord"><button data-mv="-1" title="Subir">▲</button><button data-mv="1" title="Descer">▼</button><button data-rm="1" title="Remover da projeção">✕</button></span><br><select class="mvsel" data-move="1"><option value="">Mover para…</option>'+opts.filter(o=>o!==d).map(o=>'<option value="'+R.days.indexOf(o)+'">'+esc(fmtDM(o.date)+' · '+shortName(o.tech))+'</option>').join('')+'</select></td></tr>').join('')
     +'</tbody></table></div>'; }).join('')||'<div class="empty-msg">Sem rotas para a seleção.</div>';
 }
@@ -2254,32 +2164,58 @@ function pjBacklog(){
 }
 
 /* ---- exportações ---- */
-$('#pjXlsx').addEventListener('click',()=>{
-  const R=PJ.res; if(!R) return; const rows=[], sum=[];
-  const ds=R.days.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.tech.localeCompare(b.tech));
+function pjExportTechs(){
+  const R=PJ.res; if(!R) return [];
+  const m=new Map();
+  R.days.forEach(d=>{ const c=m.get(d.tech)||{stops:0}; c.stops+=d.stops.length; m.set(d.tech,c); });
+  return [...m.entries()].sort((a,b)=>b[1].stops-a[1].stops).map(([t,c])=>({v:t,label:t,count:c.stops}));
+}
+let EXP={kind:null,checklist:null};
+function openExportModal(kind){
+  const R=PJ.res; if(!R||!R.days.length) return;
+  EXP.kind=kind;
+  $('#dlgExportTitle').textContent='Selecionar técnicos para '+(kind==='xlsx'?'a planilha (.xlsx)':'o PDF');
+  if(!EXP.checklist) EXP.checklist=Checklist($('#expChecklist'),{});
+  const opts=pjExportTechs();
+  EXP.checklist.setOptions(opts,false);
+  EXP.checklist.setSel(opts.map(o=>o.v));
+  $('#dlgExport').showModal();
+}
+$('#pjXlsx').addEventListener('click',()=>openExportModal('xlsx'));
+$('#pjPdf').addEventListener('click',()=>openExportModal('pdf'));
+$('#expConfirm').addEventListener('click',async()=>{
+  const R=PJ.res; if(!R) return;
+  const sel=EXP.checklist.sel;
+  if(!sel.size){ toast('Selecione ao menos um técnico.'); return; }
+  const days=R.days.filter(d=>sel.has(d.tech));
+  $('#dlgExport').close();
+  if(EXP.kind==='xlsx') exportXlsx(R,days); else await exportPdf(R,days);
+});
+function exportXlsx(R,days){
+  const rows=[], sum=[];
+  const ds=days.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.tech.localeCompare(b.tech));
   ds.forEach(d=>{ sum.push({Data:fmtDate(d.date),'Dia':DOW[dObj(d.date).getDay()],'Técnico':d.tech,Base:d.base?d.base.name:'',Paradas:d.stops.length,'Distância (km)':+d.km.toFixed(1),'Deslocamento (min)':Math.round(d.trav),'Atendimento (min)':Math.round(d.svcT),'Saída':fmtClock(d.start),'Retorno/Término':fmtClock(d.ret!=null?d.ret:d.end),'Jornada (min)':Math.round(d.total),'Trajeto':d.road?'pelas vias':'estimado'});
-    d.stops.forEach((s,i)=>rows.push({Data:fmtDate(d.date),'Dia':DOW[dObj(d.date).getDay()],'Técnico':d.tech,Ordem:i+1,Unidade:s.u.name,Cliente:s.u.client,'Região':s.u.region,'Município':s.u.city,Bairro:s.u.bairro||'','Endereço':s.u.addr||'',Chegada:fmtClock(s.arr),'Atendimento (min)':s.svc,'Saída':fmtClock(s.dep),'Trecho (km)':s.leg?+s.leg.km.toFixed(1):'','Trecho (min)':s.leg?Math.round(s.leg.min):'','Motivo':s.reason||'','Atividades típicas':(s.tipos||[]).join(' · '),Latitude:+s.u.lat.toFixed(6),Longitude:+s.u.lng.toFixed(6),'Precisão da localização':(PREC[s.u.prec]||PREC.none)[0]})); });
+    d.stops.forEach((s,i)=>rows.push({Data:fmtDate(d.date),'Dia':DOW[dObj(d.date).getDay()],'Técnico':d.tech,Ordem:i+1,Unidade:s.u.name,Cliente:s.u.client,'Região':s.u.region,'Município':s.u.city,Bairro:s.u.bairro||'','Endereço':s.u.addr||'',Chegada:fmtClock(s.arr),'Atendimento (min)':s.svc,'Saída':fmtClock(s.dep),'Trecho (km)':s.leg?+s.leg.km.toFixed(1):'','Trecho (min)':s.leg?Math.round(s.leg.min):'','Motivo':s.reason||'','Atendimentos ao equipamento':s.skillCount!=null?s.skillCount:'','Atividades típicas':(s.tipos||[]).join(' · '),Latitude:+s.u.lat.toFixed(6),Longitude:+s.u.lng.toFixed(6),'Precisão da localização':(PREC[s.u.prec]||PREC.none)[0]})); });
   const back=R.backlog.map(x=>({Unidade:x.d.u.name,Cliente:x.d.u.client,'Município':x.d.u.city,'Última visita':x.d.last?fmtDate(x.d.last):'','Frequência típica (dias)':x.d.cad,'Atraso (dias)':x.late>0?x.late:'',Motivo:x.reason}));
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),'Agenda');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(sum),'Resumo por rota');
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(back.length?back:[{Unidade:'(nenhuma pendência)'}]),'Pendências');
   XLSX.writeFile(wb,'Projecao_de_rotas_'+R.dates[0]+'_a_'+R.dates[R.dates.length-1]+'.xlsx');
-});
-$('#pjPdf').addEventListener('click',async()=>{
-  const R=PJ.res; if(!R||!R.days.length) return;
-  const days=R.days.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.tech.localeCompare(b.tech)), tc=techColorMap();
-  days.forEach(d=>d.color=tc.get(d.tech)||d.color);
+}
+async function exportPdf(R,days){
+  const sortedDays=days.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.tech.localeCompare(b.tech)), tc=techColorMap();
+  sortedDays.forEach(d=>d.color=tc.get(d.tech)||d.color);
   if($('#pjRoads').checked){
-    const todo=days.filter(d=>!d.road);
+    const todo=sortedDays.filter(d=>!d.road);
     if(todo.length&&todo.length<=40){ const token=RT.token; for(let i=0;i<todo.length;i++){ toast('Traçando rotas pelas vias para o PDF… ('+(i+1)+'/'+todo.length+')',60000); const ok=await osrmDay(todo[i],token); if(ok) schedule(todo[i]); await sleep(150); } toast('Rotas prontas — abrindo pré-visualização.',2500); }
     else if(todo.length) toast('Mais de 40 rotas: o PDF usará trajetos e tempos estimados por distância.',5000);
   }
-  const dts=R.dates;
-  const P={mode:'proj',tech:'Projeção de rotas',days,warn:[],base:null,round:R.params.round,start:R.params.start,
-    periodo:fmtDate(dts[0])+' a '+fmtDate(dts[dts.length-1])+' · '+dts.length+' datas',techsTxt:R.techs.length+' técnico'+(R.techs.length>1?'s':'')+' · até '+R.params.maxStops+' paradas/dia'};
+  const dts=R.dates, techsN=new Set(sortedDays.map(d=>d.tech)).size;
+  const P={mode:'proj',tech:'Projeção de rotas',days:sortedDays,warn:[],base:null,round:R.params.round,start:R.params.start,
+    periodo:fmtDate(dts[0])+' a '+fmtDate(dts[dts.length-1])+' · '+dts.length+' datas',techsTxt:techsN+' técnico'+(techsN>1?'s':'')+' · até '+R.params.maxStops+' paradas/dia'};
   openReport(P);
-});
+}
 
 
 /* =====================================================================
@@ -2349,8 +2285,7 @@ applyLogo();
 
 /* ---------------- Inicialização ---------------- */
 initFilters();
-MS.rtUnits=MultiSelect($('#msRtUnits'),{title:'Unidades',plural:'unidades',allLabel:'Todas as unidades do técnico'});
-MS.pjTech=MultiSelect($('#msPjTech'),{title:'Técnicos',plural:'técnicos',allLabel:'Nenhum selecionado',onChange:()=>pjRenderBases()});
+MS.pjTech=Checklist($('#msPjTech'),{onChange:()=>pjTechChanged()});
 MS.pjUnits=MultiSelect($('#msPjUnits'),{title:'Unidades',plural:'unidades',allLabel:'Nenhuma (modo automático)',onChange:()=>pjModeUpdate()});
 pjModeUpdate();
 updateGeoStatus();

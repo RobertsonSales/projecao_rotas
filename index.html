@@ -517,10 +517,10 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
       <div class="fld"><span class="lbl">Região</span><div id="msRegion"></div></div>
       <div class="fld"><span class="lbl">Cliente</span><div id="msClient"></div></div>
       <div class="fld"><span class="lbl">Unidade</span><div id="msUnit"></div></div>
-      <div class="fld f-na"><span class="lbl">Tipo de tarefa</span><div id="msTipo"></div></div>
+      <div class="fld"><span class="lbl">Tipo de tarefa</span><div id="msTipo"></div></div>
       <button class="btn sm" id="btnClear">Limpar filtros</button>
       <span class="filter-sum" id="filterSum"></span>
-      <span class="filter-sum pj-hint">Nesta aba, <b>Região, Cliente e Unidade</b> delimitam apenas a projeção automática pelo histórico. Equipe, datas e unidades são definidas no painel da projeção.</span>
+      <span class="filter-sum pj-hint">Nesta aba, <b>Região, Cliente, Unidade e Tipo de tarefa</b> delimitam a projeção automática pelo histórico — o Tipo de tarefa define a <b>atividade</b> considerada (ex.: manutenção preventiva ou corretiva), influenciando frequência, técnicos aptos e motivo das visitas. Equipe, datas e unidades são definidas no painel da projeção.</span>
     </section>
 
     <main>
@@ -583,6 +583,8 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
             <label>Paradas por dia (máx.)<input type="number" id="pjMax" min="1" max="12" value="6"></label>
             <label>Jornada máxima (horas)<input type="number" id="pjHours" min="2" max="14" step="0.5" value="9"></label>
             <label>Horário de saída<input type="time" id="pjStart" value="08:00"></label>
+            <label>Tempo de execução por tarefa<select id="pjSvcOverride"><option value="">Histórico (automático, por unidade)</option><option value="15">15 min</option><option value="30">30 min</option><option value="45">45 min</option><option value="60">1h</option><option value="90">1h30</option><option value="120">2h</option><option value="150">2h30</option><option value="180">3h</option></select></label>
+            <small class="pj-svc-hint" style="display:block;margin-top:-4px;color:var(--tx3);font-weight:500;text-transform:none">Quando escolhido, substitui a duração histórica de cada unidade e recalcula quantas unidades cabem na jornada de cada técnico.</small>
             <label class="chk"><input type="checkbox" id="pjRound" checked> Retornar à base ao final</label>
             <label class="chk"><input type="checkbox" id="pjRoads" checked> Traçar pelas vias (OSRM online)</label>
           </div>
@@ -594,7 +596,7 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
             <button class="btn primary" id="pjBuild" style="justify-content:center">Projetar rotas</button>
             <button class="btn" id="pjXlsx" style="justify-content:center" disabled>Exportar agenda (.xlsx)</button>
             <button class="btn" id="pjPdf" style="justify-content:center" disabled>Exportar PDF · A4 paisagem</button>
-            <div class="rt-note" id="pjNote"><b>Planejamento manual:</b> escolha as unidades e o sistema distribui as visitas entre os técnicos e as datas, por proximidade, respeitando paradas e jornada. <b>Automático:</b> sem unidades escolhidas, usa a <b>frequência de manutenção por tipo de equipamento</b> de cada técnico e prioriza as unidades <b>vencidas</b>.</div>
+            <div class="rt-note" id="pjNote"><b>Planejamento manual:</b> escolha as unidades e o sistema distribui as visitas entre os técnicos e as datas, por proximidade, respeitando paradas e jornada. <b>Automático:</b> sem unidades escolhidas, usa a <b>frequência de manutenção por tipo de equipamento</b> de cada técnico e prioriza as unidades <b>vencidas</b>. Se um <b>Tipo de tarefa</b> for marcado no filtro do topo, só o histórico dessa atividade é considerado (frequência, última visita, técnicos aptos e duração).</div>
           </div>
         </div>
         <div class="card" id="pjMapBox" style="display:none"><div class="card-h"><h3 id="pjTitle">Mapa da projeção</h3><small id="pjSub"></small></div><div id="pjMap"></div></div>
@@ -1622,7 +1624,7 @@ function optimize(pts,base,round){
 }
 function unitSvc(k,tasksDay){
   if(tasksDay){ const d=tasksDay.filter(t=>t.dur!=null&&t.dur>0&&t.dur<600); const s=d.reduce((a,t)=>a+t.dur,0); if(s>0) return Math.max(10,Math.round(s)); }
-  const all=(S.byUnit.get(k)||[]).filter(t=>t.dur>0&&t.dur<480).map(t=>t.dur);
+  const all=(S.byUnit.get(k)||[]).filter(t=>t.dur>0&&t.dur<480&&pjTipoPass(t)).map(t=>t.dur);
   return Math.max(10,Math.round(all.length?median(all):S.gMedian));
 }
 function topTipos(tasks,n){ return countBy(tasks,t=>LM.titleCase(t.tipo)).slice(0,n).map(e=>e[0]); }
@@ -1827,6 +1829,8 @@ const dayDiff=(a,b)=>Math.round((dObj(a)-dObj(b))/864e5);
 const fmtDM=s=>DOW[dObj(s).getDay()]+' '+fmtDate(s).slice(0,5);
 const shortName=t=>{ const p=t.split(' ').filter(Boolean); return p.length>2?p[0]+' '+p[p.length-1]:t; };
 const pjUnitPass=u=>{ const f=S.f; if(f.region.size&&!f.region.has(u.region)) return false; if(f.client.size&&!f.client.has(u.client)) return false; if(f.unit.size&&!f.unit.has(u.key)) return false; return true; };
+const pjTipoPass=t=>!S.f.tipo.size||S.f.tipo.has(t.tipo);
+const pjTaskPass=t=>{ const u=S.units.get(t.unit); return !!u&&pjUnitPass(u)&&pjTipoPass(t); };
 const pjMaxDate=()=>S.tasks.reduce((m,t)=>t.d>m?t.d:m,'');
 const pjCut=months=>isoD(new Date(dObj(pjMaxDate()).getTime()-months*30.44*864e5));
 function techColorMap(){ const m=new Map(); const ts=PJ.res?PJ.res.techs:[...MS.pjTech.sel].map((t,i)=>({t})); ts.forEach((x,i)=>m.set(x.t,PALETTE[i%PALETTE.length])); return m; }
@@ -1872,7 +1876,7 @@ $('#pjDates').addEventListener('click',e=>{ const b=e.target.closest('b[data-d]'
 /* ---- opções (equipe / unidades) ---- */
 function pjAllTechs(win){
   const cut=pjCut(win), cnt=new Map();
-  S.tasks.forEach(t=>{ if(t.d>=cut) cnt.set(t.tech,(cnt.get(t.tech)||0)+1); });
+  S.tasks.forEach(t=>{ if(t.d>=cut&&pjTipoPass(t)) cnt.set(t.tech,(cnt.get(t.tech)||0)+1); });
   return cnt;
 }
 function pjSyncDatesVisibility(){
@@ -1894,7 +1898,7 @@ function pjRefresh(){
   MS.pjUnits.setOptions(uo,false); pjModeUpdate();
   if(PJ.file!==S.file){
     PJ.file=S.file; PJ.res=null; PJ.sel={date:null,tech:null}; PJ.baseOv={}; PJ.tipoOv={}; MS.pjUnits.setSel([]); pjModeUpdate();
-    MS.pjTech.clear(true);
+    $('#pjSvcOverride').value=''; MS.pjTech.clear(true);
     PJ.dates=new Set(); PJ.oneOff=new Set(); pjSyncDatesVisibility(); pjRenderDates();
     pjHide();
   }
@@ -1959,12 +1963,12 @@ function topEquip(tasks,n){
 }
 function techEquipProfile(tech,win){
   const cut=pjCut(win), m=new Map();
-  S.tasks.forEach(t=>{ if(t.tech!==tech||t.d<cut) return; (t.equip||[]).forEach(eq=>{ const key=equipKey(eq); m.set(key,(m.get(key)||0)+1); }); });
+  S.tasks.forEach(t=>{ if(t.tech!==tech||t.d<cut||!pjTipoPass(t)) return; (t.equip||[]).forEach(eq=>{ const key=equipKey(eq); m.set(key,(m.get(key)||0)+1); }); });
   return m;
 }
 function pjDemand(win){
   const cut=pjCut(win), hist=new Map();
-  S.tasks.forEach(t=>{ if(t.d<cut) return; let h=hist.get(t.unit); if(!h) hist.set(t.unit,h={days:new Set(),techs:new Map()}); h.days.add(t.d); h.techs.set(t.tech,(h.techs.get(t.tech)||0)+1); });
+  S.tasks.forEach(t=>{ if(t.d<cut||!pjTipoPass(t)) return; let h=hist.get(t.unit); if(!h) hist.set(t.unit,h={days:new Set(),techs:new Map()}); h.days.add(t.d); h.techs.set(t.tech,(h.techs.get(t.tech)||0)+1); });
   const out=new Map();
   hist.forEach((h,k)=>{
     const u=S.units.get(k); if(!u||u.lat==null||!pjUnitPass(u)) return;
@@ -1975,7 +1979,7 @@ function pjDemand(win){
   return out;
 }
 function mkDem(k,u,cad,vd,techs){
-  const all=S.byUnit.get(k)||[]; let last=''; all.forEach(t=>{ if(t.d>last) last=t.d; });
+  const all=(S.byUnit.get(k)||[]).filter(pjTipoPass); let last=''; all.forEach(t=>{ if(t.d>last) last=t.d; });
   return {k,u,cad,vd,techs,last,svc:unitSvc(k,null),tipos:topTipos(all,2),equip:topEquip(all,4)};
 }
 
@@ -1997,6 +2001,8 @@ function pjRun(){
   const forced=new Set(MS.pjUnits.sel), manual=forced.size>0, mix=$('#pjMix').checked, hd=pjDemand(win);
   const dem=(manual&&!mix)?new Map([...hd].filter(([k])=>forced.has(k))):hd;
   forced.forEach(k=>{ if(!dem.has(k)){ const u=S.units.get(k); if(u&&u.lat!=null) dem.set(k,mkDem(k,u,30,0,new Map())); } });
+  const svcOv=parseInt($('#pjSvcOverride').value)||0;
+  if(svcOv) dem.forEach(d=>{ d.svc=svcOv; });
   Object.keys(PJ.tipoOv).forEach(k=>{ if(PJ.tipoOv[k]&&dem.has(k)) dem.get(k).tipos=[PJ.tipoOv[k]]; });
   const lastEff=new Map(); dem.forEach(d=>lastEff.set(d.k,d.last||'2000-01-01'));
   const firstLast=new Map(lastEff);
@@ -2267,29 +2273,4 @@ function applyLogo(){
 }
 $('#setLogoFile').addEventListener('change',e=>{
   const f=e.target.files[0]; e.target.value=''; if(!f) return;
-  if(!/^image\//.test(f.type)){ toast('Escolha um arquivo de imagem (PNG, SVG, JPG ou WebP).'); return; }
-  if(f.size>2*1024*1024){ toast('A imagem passa de 2 MB. Use uma versão menor.'); return; }
-  const rd=new FileReader();
-  rd.onload=()=>{
-    const done=uri=>{ LS.set('lmdt_logo_v1',uri); applyLogo(); toast('Logomarca atualizada.'); };
-    if(f.type==='image/svg+xml'){ done(rd.result); return; }
-    const im=new Image();
-    im.onload=()=>{ const s=Math.min(1,160/im.height,600/im.width), c=document.createElement('canvas'); c.width=Math.max(1,Math.round(im.width*s)); c.height=Math.max(1,Math.round(im.height*s)); c.getContext('2d').drawImage(im,0,0,c.width,c.height); done(c.toDataURL('image/png')); };
-    im.onerror=()=>toast('Não foi possível ler a imagem.'); im.src=rd.result;
-  };
-  rd.readAsDataURL(f);
-});
-$('#setLogoRm').addEventListener('click',()=>{ LS.del('lmdt_logo_v1'); applyLogo(); toast('Logomarca removida.'); });
-const _lpTutorial=$('#lpTutorial'); if(_lpTutorial) _lpTutorial.addEventListener('click',()=>$('#btnTutorial').click());
-applyLogo();
-
-/* ---------------- Inicialização ---------------- */
-initFilters();
-MS.pjTech=Checklist($('#msPjTech'),{onChange:()=>pjTechChanged()});
-MS.pjUnits=MultiSelect($('#msPjUnits'),{title:'Unidades',plural:'unidades',allLabel:'Nenhuma (modo automático)',onChange:()=>pjModeUpdate()});
-pjModeUpdate();
-updateGeoStatus();
-})();
-</script>
-</body>
-</html>
+  if(!/^image\//.test(f.type)){ toast('Escolha um arqui

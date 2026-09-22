@@ -1907,7 +1907,7 @@ function pjRenderBases(){
   if(!techs.length||!baseOpts.length){ wrap.style.display='none'; box.innerHTML=''; return; }
   wrap.style.display='';
   box.innerHTML=techs.map(t=>{
-    const autoId=techBaseId(t)||'sulacap', auto=S.bases.get(autoId)||null, cur=PJ.baseOv[t]||'';
+    const auto=S.bases.get('sulacap')||baseOpts[0]||null, cur=PJ.baseOv[t]||'';
     return '<label style="display:flex;align-items:center;gap:8px;justify-content:space-between">'
       +'<span style="min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+esc(t)+'">'+esc(t)+'</span>'
       +'<select data-tech="'+esc(t)+'" style="max-width:58%">'
@@ -2002,7 +2002,7 @@ function pjRun(){
   const firstLast=new Map(lastEff);
   const pending=new Set(forced);
   const fallbackBase=S.bases.get('sulacap')||[...S.bases.values()].find(b=>b.lat!=null)||null;
-  const tinfo=techs.map((t,i)=>({t,color:PALETTE[i%PALETTE.length],base:(PJ.baseOv[t]&&S.bases.get(PJ.baseOv[t]))||S.bases.get(techBaseId(t))||fallbackBase}));
+  const tinfo=techs.map((t,i)=>({t,color:PALETTE[i%PALETTE.length],base:(PJ.baseOv[t]&&S.bases.get(PJ.baseOv[t]))||fallbackBase}));
   const profiles=new Map(techs.map(t=>[t,techEquipProfile(t,win)]));
   const skillScore=(d,t)=>{ const prof=profiles.get(t); let s=0; d.equip.forEach(e=>{ s+=(prof.get(e.key)||0)*e.n; }); return s; };
   const elig=(d,t)=>!aff||forced.has(d.k)||d.equip.some(e=>profiles.get(t).has(e.key));

@@ -585,6 +585,7 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
             <label>Técnicos<div id="msPjTech"></div></label>
             <div id="pjBaseWrap" style="display:none"><div class="pj-h" style="margin-top:0">Base operacional por técnico</div><div id="pjBaseBox" class="pj-chips" style="flex-direction:column;align-items:stretch;gap:8px"></div></div>
             <label>Unidades a visitar (escolha do operador)<div id="msPjUnits"></div></label>
+            <div id="pjTipoWrap" style="display:none"><div class="pj-h" style="margin-top:0">Motivo da visita por unidade</div><div id="pjTipoBox" class="pj-chips" style="flex-direction:column;align-items:stretch;gap:8px"></div></div>
             <label class="chk" id="pjMixRow"><input type="checkbox" id="pjMix"> Complementar com unidades vencidas do histórico</label>
             <div class="pj-mode" id="pjModeNote"></div>
             <label>Histórico de referência<select id="pjWin"><option value="6">Últimos 6 meses</option><option value="12" selected>Últimos 12 meses</option><option value="18">Últimos 18 meses</option></select></label>
@@ -1959,7 +1960,7 @@ $('#rptPrint').addEventListener('click',()=>{
 /* =====================================================================
    PROJEÇÃO DE ROTAS — planejamento futuro por técnico e datas
    ===================================================================== */
-const PJ={dates:new Set(),wd:[0,1,1,1,1,1,0],res:null,sel:{date:null,tech:null},file:'',rt:0,baseOv:{}};
+const PJ={dates:new Set(),wd:[0,1,1,1,1,1,0],res:null,sel:{date:null,tech:null},file:'',rt:0,baseOv:{},tipoOv:{}};
 const isoD=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 const dObj=s=>new Date(s+'T12:00:00');
 const dayDiff=(a,b)=>Math.round((dObj(a)-dObj(b))/864e5);
@@ -2007,7 +2008,7 @@ function pjRefresh(){
   const have=new Set(uo.map(o=>o.v)); [...MS.pjUnits.sel].forEach(k=>{ if(!have.has(k)) MS.pjUnits.sel.delete(k); });
   MS.pjUnits.setOptions(uo,false); pjModeUpdate();
   if(PJ.file!==S.file){
-    PJ.file=S.file; PJ.res=null; PJ.sel={date:null,tech:null}; PJ.baseOv={}; MS.pjUnits.setSel([]); pjModeUpdate();
+    PJ.file=S.file; PJ.res=null; PJ.sel={date:null,tech:null}; PJ.baseOv={}; PJ.tipoOv={}; MS.pjUnits.setSel([]); pjModeUpdate();
     const c90=pjCut(3), act=new Set(S.tasks.filter(t=>t.d>=c90).map(t=>t.tech));
     MS.pjTech.setSel([...act].filter(t=>cnt.has(t)));
     if(!PJ.dates.size) pjDefaultDates(); else pjRenderDates();
@@ -2035,9 +2036,31 @@ $('#pjBaseBox').addEventListener('change',e=>{
   const sel=e.target.closest('select[data-tech]'); if(!sel) return;
   const t=sel.dataset.tech; if(sel.value) PJ.baseOv[t]=sel.value; else delete PJ.baseOv[t];
 });
+function allTipos(){ return [...new Set(S.tasks.map(t=>LM.titleCase(t.tipo)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR')); }
+function pjRenderTipos(){
+  const box=$('#pjTipoBox'), wrap=$('#pjTipoWrap'); if(!box||!wrap) return;
+  const units=[...MS.pjUnits.sel], opts=allTipos();
+  if(!units.length||!opts.length){ wrap.style.display='none'; box.innerHTML=''; return; }
+  wrap.style.display='';
+  box.innerHTML=units.map(k=>{
+    const u=S.units.get(k); if(!u) return '';
+    const hist=topTipos(S.byUnit.get(k)||[],1), auto=hist[0], cur=PJ.tipoOv[k]||'';
+    return '<label style="display:flex;align-items:center;gap:8px;justify-content:space-between">'
+      +'<span style="min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="'+esc(u.name)+'">'+esc(u.name)+'</span>'
+      +'<select data-unit="'+esc(k)+'" style="max-width:58%">'
+      +'<option value="">Automático'+(auto?' ('+esc(auto)+')':' (histórico)')+'</option>'
+      +opts.map(o=>'<option value="'+esc(o)+'"'+(cur===o?' selected':'')+'>'+esc(o)+'</option>').join('')
+      +'</select></label>';
+  }).join('');
+}
+$('#pjTipoBox').addEventListener('change',e=>{
+  const sel=e.target.closest('select[data-unit]'); if(!sel) return;
+  const k=sel.dataset.unit; if(sel.value) PJ.tipoOv[k]=sel.value; else delete PJ.tipoOv[k];
+});
 function pjModeUpdate(){
   const n=MS.pjUnits.sel.size; $('#pjMixRow').style.display=n?'':'none';
   $('#pjModeNote').innerHTML=n?'<b>Planejamento manual:</b> as '+n+' unidade'+(n>1?'s':'')+' escolhida'+(n>1?'s':'')+' serão distribuídas entre os técnicos e as datas por proximidade (a afinidade por histórico não se aplica a elas). Cada unidade é visitada uma vez.':'<b>Modo automático:</b> nenhuma unidade escolhida — a projeção usa a frequência de visitas do histórico. Escolha unidades para planejar manualmente.';
+  pjRenderTipos();
 }
 $('#pjMix').addEventListener('change',()=>{});
 function pjHide(){ ['pjGridBox','pjMapBox','pjDetail','pjBacklog'].forEach(i=>$('#'+i).style.display='none'); $('#pjKpisBox').innerHTML='<div class="empty-msg">Escolha as datas e os técnicos e clique em “Projetar rotas”.</div>'; $('#pjXlsx').disabled=$('#pjPdf').disabled=true; }
@@ -2072,6 +2095,7 @@ function pjRun(){
   const forced=new Set(MS.pjUnits.sel), manual=forced.size>0, mix=$('#pjMix').checked, hd=pjDemand(win);
   const dem=(manual&&!mix)?new Map([...hd].filter(([k])=>forced.has(k))):hd;
   forced.forEach(k=>{ if(!dem.has(k)){ const u=S.units.get(k); if(u&&u.lat!=null) dem.set(k,mkDem(k,u,30,0,new Map())); } });
+  Object.keys(PJ.tipoOv).forEach(k=>{ if(PJ.tipoOv[k]&&dem.has(k)) dem.get(k).tipos=[PJ.tipoOv[k]]; });
   const lastEff=new Map(); dem.forEach(d=>lastEff.set(d.k,d.last||'2000-01-01'));
   const firstLast=new Map(lastEff);
   const pending=new Set(forced);

@@ -2273,4 +2273,29 @@ function applyLogo(){
 }
 $('#setLogoFile').addEventListener('change',e=>{
   const f=e.target.files[0]; e.target.value=''; if(!f) return;
-  if(!/^image\//.test(f.type)){ toast('Escolha um arqui
+  if(!/^image\//.test(f.type)){ toast('Escolha um arquivo de imagem (PNG, SVG, JPG ou WebP).'); return; }
+  if(f.size>2*1024*1024){ toast('A imagem passa de 2 MB. Use uma versão menor.'); return; }
+  const rd=new FileReader();
+  rd.onload=()=>{
+    const done=uri=>{ LS.set('lmdt_logo_v1',uri); applyLogo(); toast('Logomarca atualizada.'); };
+    if(f.type==='image/svg+xml'){ done(rd.result); return; }
+    const im=new Image();
+    im.onload=()=>{ const s=Math.min(1,160/im.height,600/im.width), c=document.createElement('canvas'); c.width=Math.max(1,Math.round(im.width*s)); c.height=Math.max(1,Math.round(im.height*s)); c.getContext('2d').drawImage(im,0,0,c.width,c.height); done(c.toDataURL('image/png')); };
+    im.onerror=()=>toast('Não foi possível ler a imagem.'); im.src=rd.result;
+  };
+  rd.readAsDataURL(f);
+});
+$('#setLogoRm').addEventListener('click',()=>{ LS.del('lmdt_logo_v1'); applyLogo(); toast('Logomarca removida.'); });
+const _lpTutorial=$('#lpTutorial'); if(_lpTutorial) _lpTutorial.addEventListener('click',()=>$('#btnTutorial').click());
+applyLogo();
+
+/* ---------------- Inicialização ---------------- */
+initFilters();
+MS.pjTech=Checklist($('#msPjTech'),{onChange:()=>pjTechChanged()});
+MS.pjUnits=MultiSelect($('#msPjUnits'),{title:'Unidades',plural:'unidades',allLabel:'Nenhuma (modo automático)',onChange:()=>pjModeUpdate()});
+pjModeUpdate();
+updateGeoStatus();
+})();
+</script>
+</body>
+</html>

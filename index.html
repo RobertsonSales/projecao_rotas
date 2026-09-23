@@ -236,6 +236,16 @@ table.cl td:first-child{min-width:260px}
 .rt-full{flex:1;padding:6mm 10mm}
 .chips{display:flex;flex-wrap:wrap;gap:1mm}
 .chips span{background:#e0f2f1;color:#115e59;border-radius:3mm;padding:.4mm 2mm;font-size:7pt;font-weight:600}
+.rgrid{flex:1;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:4mm;padding:5mm 10mm 3mm;min-height:0}
+.rgc{border:1px solid #e2e8f0;border-radius:2mm;padding:2mm 2.5mm;display:flex;flex-direction:column;min-height:0;background:#fff}
+.rgc h4{margin:0 0 1.5mm;font-size:8pt;color:#0b2545;text-transform:uppercase;letter-spacing:.4px}
+.rgc .im{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.rgc img{max-width:100%;max-height:100%;object-fit:contain}
+.rt-two{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:6mm;padding:5mm 10mm 3mm;min-height:0;align-content:start;overflow:hidden}
+.rt-two h4,.rt-full h4{margin:0 0 1.8mm;font-size:8.5pt;color:#0b2545;text-transform:uppercase;letter-spacing:.4px}
+.ov-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.ov-actions .sp{flex:1}
+.ov-actions small{color:var(--tx3)}
 
 @media (max-width:1100px){
   .mapwrap,.rt-layout{grid-template-columns:1fr}
@@ -526,6 +536,12 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
     <main>
       <!-- PANORAMA -->
       <section id="tab-overview">
+        <div class="ov-actions">
+          <small>Relatórios do panorama refletem exatamente os filtros aplicados acima.</small>
+          <span class="sp"></span>
+          <button class="btn sm" id="ovXlsx">Exportar panorama (.xlsx)</button>
+          <button class="btn sm primary" id="ovPdf">Exportar PDF · A4 paisagem</button>
+        </div>
         <div class="kpis" id="kpis"></div>
         <div class="mapwrap">
           <div class="card">
@@ -678,7 +694,7 @@ table.pj-grid{border-collapse:separate;border-spacing:0;font-size:12px;width:100
 <!-- Relatório PDF -->
 <div id="reportOverlay" class="hide">
   <div class="rpt-toolbar">
-    <b>Pré-visualização · Roteiro de Visitação Técnica (A4 paisagem)</b>
+    <b id="rptTitle">Pré-visualização · Roteiro de Visitação Técnica (A4 paisagem)</b>
     <small id="rptStatus"></small>
     <span class="sp"></span>
     <small>No diálogo de impressão escolha “Salvar como PDF”, papel A4, paisagem, sem margens e com gráficos de segundo plano.</small>
@@ -1443,6 +1459,178 @@ $('#btnExport').addEventListener('click',()=>{
   XLSX.writeFile(wb,'Diligencias_filtradas.xlsx');
 });
 
+/* =====================================================================
+   PANORAMA — relatório PDF e planilha dos dados filtrados
+   ===================================================================== */
+function ovPeriodTxt(){
+  const ds=S.view.map(t=>t.d).sort();
+  const f=S.f.from||(ds[0]||''), t=S.f.to||(ds[ds.length-1]||'');
+  return (f||t)?(fmtDate(f)+' a '+fmtDate(t)):'—';
+}
+function ovSelNames(key){
+  const sel=[...S.f[key]];
+  if(!sel.length) return 'Todos';
+  const names=key==='unit'?sel.map(k=>(S.units.get(k)||{}).name||k):sel;
+  return names.length>6?(names.slice(0,6).join(', ')+' +'+(names.length-6)):names.join(', ');
+}
+function ovStats(){
+  const v=S.view, n=v.length;
+  const units=new Set(v.map(t=>t.unit)), techs=new Set(v.map(t=>t.tech));
+  const clients=new Set([...units].map(k=>S.units.get(k).client));
+  const cities=new Set([...units].map(k=>S.units.get(k).city));
+  const regions=new Set([...units].map(k=>S.units.get(k).region));
+  const dur=v.filter(t=>t.dur!=null), min=dur.reduce((s,t)=>s+t.dur,0);
+  const corr=v.filter(t=>/CORRETIV/i.test(t.tipo)).length;
+  const days=new Set(v.map(t=>t.d)).size;
+  return {n,units,techs,clients,cities,regions,dur,min,corr,days};
+}
+function ovUnitRows(){
+  return [...S.agg.entries()].map(([k,a])=>{
+    const u=S.units.get(k);
+    return {k,u,n:a.n,techs:a.techs.size,hours:a.dur/60,last:a.last,
+            tipo:[...a.tipos.entries()].sort((x,y)=>y[1]-x[1]).map(e=>e[0])[0]||'—'};
+  }).sort((x,y)=>y.n-x.n);
+}
+function rtTable(title,head,rows){
+  return '<h4>'+esc(title)+'</h4><table class="rt"><thead><tr>'+head.map(h=>'<th'+(h[1]?' class="r"':'')+'>'+esc(h[0])+'</th>').join('')+'</tr></thead><tbody>'
+   +(rows.length?rows.map(r=>'<tr>'+r.map((c,i)=>'<td'+(head[i]&&head[i][1]?' class="r"':'')+'>'+c+'</td>').join('')+'</tr>').join('')
+     :'<tr><td colspan="'+head.length+'">Sem dados para os filtros aplicados.</td></tr>')+'</tbody></table>';
+}
+function chartImg(id){
+  const c=S.charts&&S.charts[id]; if(!c||!c.canvas||!c.canvas.width) return '';
+  try{
+    const src=c.canvas, t=document.createElement('canvas');
+    t.width=src.width; t.height=src.height;
+    const x=t.getContext('2d'); x.fillStyle='#ffffff'; x.fillRect(0,0,t.width,t.height); x.drawImage(src,0,0);
+    return t.toDataURL('image/png');
+  }catch(e){ return ''; }
+}
+function ovChartCard(title,id){
+  const d=chartImg(id);
+  return '<div class="rgc"><h4>'+esc(title)+'</h4><div class="im">'+(d?'<img src="'+d+'" alt="'+esc(title)+'">':'<span style="font-size:7.5pt;color:#94a3b8">Gráfico indisponível</span>')+'</div></div>';
+}
+function buildOverviewReport(P){
+  const pages=[], v=S.view, st=ovStats(), title='Panorama de Diligências Técnicas';
+  const sub=ovPeriodTxt()+' · '+fmtInt(st.n)+' diligências filtradas';
+  const uRows=ovUnitRows();
+  const geoU=uRows.filter(r=>r.u.lat!=null);
+  const semGeo=uRows.length-geoU.length;
+
+  // cores do mapa por cliente (mesmo critério do painel)
+  const cats=[...new Set(geoU.map(r=>r.u.client))].slice(0,12);
+  const cmap=new Map(cats.map((c,i)=>[c,PALETTE[i%PALETTE.length]]));
+  RPT.jobs=[{ov:true,units:geoU.map(r=>({lat:r.u.lat,lng:r.u.lng,n:r.n,color:cmap.get(r.u.client)||OTHER}))}];
+
+  const legend='<div class="rleg"><b style="font-size:7.6pt;color:#0b2545">Clientes no mapa</b>'
+    +cats.slice(0,8).map(c=>'<div><i style="background:'+cmap.get(c)+';height:3mm;width:3mm;border-radius:50%"></i><span>'+esc(c)+'</span></div>').join('')
+    +(cats.length>8?'<div><i style="background:'+OTHER+';height:3mm;width:3mm;border-radius:50%"></i><span>Demais clientes</span></div>':'')
+    +'<div><span class="bpin" style="width:4mm;height:4mm;font-size:6pt;border-radius:1mm;display:inline-grid;flex:none">B</span><span>Base operacional</span></div>'
+    +'<div style="color:#64748b">Tamanho do círculo = nº de diligências</div></div>';
+
+  // 1) Visão geral
+  pages.push(pageShell(title,sub+' · visão geral',
+    '<div class="rpt-body">'+mapBox(0)+'<div class="rpt-side">'
+    +rk([['Diligências',fmtInt(st.n)],['Unidades atendidas',fmtInt(st.units.size)],
+         ['Técnicos',fmtInt(st.techs.size)],['Clientes',fmtInt(st.clients.size)],
+         ['Horas em campo',fmtInt(st.min/60)+' h'],['Corretivas',st.n?Math.round(st.corr/st.n*100)+'%':'—']])
+    +rmeta([['Período',esc(ovPeriodTxt())],['Técnico',esc(ovSelNames('tech'))],['Região',esc(ovSelNames('region'))],
+            ['Cliente',esc(ovSelNames('client'))],['Unidade',esc(ovSelNames('unit'))],['Tipo de tarefa',esc(ovSelNames('tipo'))],
+            ['Cobertura',fmtInt(st.cities.size)+' municípios · '+fmtInt(st.regions.size)+' regiões'],
+            ['Dias com atividade',fmtInt(st.days)+(st.days?' · '+fmt1(st.n/st.days)+' diligências/dia':'')]])
+    +legend+'<div class="rnote">Base: '+esc(S.file||'planilha importada')+'. Valores refletem os filtros ativos no painel. Horas em campo consideram '+fmtInt(st.dur.length)+' registros com duração válida'+(semGeo?'; '+fmtInt(semGeo)+' unidade(s) sem localização não aparecem no mapa':'')+'.</div>'
+    +'</div></div>'));
+
+  // 2) Indicadores (gráficos do painel)
+  pages.push(pageShell(title,sub+' · indicadores do período',
+    '<div class="rgrid">'
+    +ovChartCard('Diligências por mês','chMonth')
+    +ovChartCard('Tipos de tarefa','chTipo')
+    +ovChartCard('Diligências por técnico','chTech')
+    +ovChartCard('Diligências por região','chRegion')
+    +ovChartCard('Diligências por cliente','chClient')
+    +ovChartCard('Dia da semana','chDow')
+    +'</div>'));
+
+  // 3) Resumos
+  const pct=n=>st.n?Math.round(n/st.n*100)+'%':'—';
+  const byTech=countBy(v,t=>t.tech).slice(0,16).map(e=>[esc(e[0]),fmtInt(e[1]),pct(e[1])]);
+  const byRegion=countBy(v,t=>S.units.get(t.unit).region).slice(0,16).map(e=>[esc(e[0]),fmtInt(e[1]),pct(e[1])]);
+  const byClient=countBy(v,t=>S.units.get(t.unit).client).slice(0,16).map(e=>[esc(e[0]),fmtInt(e[1]),pct(e[1])]);
+  const byTipo=countBy(v,t=>t.tipo).slice(0,16).map(e=>[esc(e[0]),fmtInt(e[1]),pct(e[1])]);
+  const H3=l=>[[l,0],['Diligências',1],['Part.',1]];
+  pages.push(pageShell(title,sub+' · resumo por técnico e região',
+    '<div class="rt-two"><div>'+rtTable('Por técnico',H3('Técnico'),byTech)+'</div><div>'+rtTable('Por região',H3('Região'),byRegion)+'</div></div>'));
+  pages.push(pageShell(title,sub+' · resumo por cliente e tipo de tarefa',
+    '<div class="rt-two"><div>'+rtTable('Por cliente',H3('Cliente'),byClient)+'</div><div>'+rtTable('Por tipo de tarefa',H3('Tipo de tarefa'),byTipo)+'</div></div>'));
+
+  // 4) Unidades (ranking paginado)
+  const HU=[['#',0],['Unidade',0],['Cliente',0],['Região',0],['Município',0],['Diligências',1],['Técnicos',1],['Horas',1],['Última visita',0],['Tipo predominante',0]];
+  const CH=20, lim=Math.min(uRows.length,200);
+  for(let off=0; off<lim; off+=CH){
+    const part=uRows.slice(off,Math.min(off+CH,lim));
+    const rows=part.map((r,i)=>[String(off+i+1),'<b>'+esc(r.u.name)+'</b>',esc(r.u.client),esc(r.u.region),esc(r.u.city),
+      fmtInt(r.n),fmtInt(r.techs),fmt1(r.hours),fmtDate(r.last),esc(r.tipo)]);
+    pages.push(pageShell(title,sub+' · unidades atendidas ('+(off+1)+'–'+(off+part.length)+' de '+fmtInt(uRows.length)+')',
+      '<div class="rt-full">'+rtTable('Unidades ordenadas por volume de diligências',HU,rows)
+      +'<div class="rnote" style="margin-top:3mm">'+(lim<uRows.length?'Exibidas as '+lim+' unidades com maior volume — a lista completa está na exportação em planilha (.xlsx). ':'')+'Horas calculadas a partir das durações registradas.</div></div>'));
+  }
+
+  const N=pages.length;
+  return pages.map((p,i)=>p.replace('@P@',i+1).replace('@N@',N)).join('');
+}
+$('#ovPdf').addEventListener('click',()=>{
+  if(!S.view.length){ toast('Sem diligências nos filtros atuais para gerar o relatório.'); return; }
+  openReport({mode:'overview',tech:'',days:[],warn:[]});
+});
+$('#ovXlsx').addEventListener('click',()=>{
+  if(!S.view.length){ toast('Sem diligências nos filtros atuais para exportar.'); return; }
+  const v=S.view, st=ovStats(), pct=n=>st.n?Math.round(n/st.n*100)/100:0;
+  const resumo=[
+    {Indicador:'Arquivo de origem',Valor:S.file||'—'},
+    {Indicador:'Emitido em',Valor:rptStamp()},
+    {Indicador:'Período',Valor:ovPeriodTxt()},
+    {Indicador:'Filtro · Técnico',Valor:ovSelNames('tech')},
+    {Indicador:'Filtro · Região',Valor:ovSelNames('region')},
+    {Indicador:'Filtro · Cliente',Valor:ovSelNames('client')},
+    {Indicador:'Filtro · Unidade',Valor:ovSelNames('unit')},
+    {Indicador:'Filtro · Tipo de tarefa',Valor:ovSelNames('tipo')},
+    {Indicador:'Diligências',Valor:st.n},
+    {Indicador:'Unidades atendidas',Valor:st.units.size},
+    {Indicador:'Municípios',Valor:st.cities.size},
+    {Indicador:'Regiões',Valor:st.regions.size},
+    {Indicador:'Técnicos',Valor:st.techs.size},
+    {Indicador:'Clientes',Valor:st.clients.size},
+    {Indicador:'Horas em campo',Valor:Math.round(st.min/60)},
+    {Indicador:'Corretivas (%)',Valor:st.n?Math.round(st.corr/st.n*100):0},
+    {Indicador:'Dias com atividade',Valor:st.days}
+  ];
+  const dim=(label,entries)=>entries.map(e=>({[label]:e[0],'Diligências':e[1],'Participação':pct(e[1])}));
+  const unidades=ovUnitRows().map((r,i)=>({'#':i+1,Unidade:r.u.name,Cliente:r.u.client,'Região':r.u.region,'Município':r.u.city,
+    Bairro:r.u.bairro||'',Endereço:r.u.addr||'','Diligências':r.n,'Técnicos':r.techs,'Horas':Math.round(r.hours*10)/10,
+    'Última visita':fmtDate(r.last),'Tipo predominante':r.tipo,'Localização':(PREC[r.u.prec]||PREC.none)[0],
+    Latitude:r.u.lat==null?'':+r.u.lat.toFixed(6),Longitude:r.u.lng==null?'':+r.u.lng.toFixed(6)}));
+  const dilig=v.map(t=>{ const u=S.units.get(t.unit); return {Codigo:t.id,Data:fmtDate(t.d),'Tipo da tarefa':t.tipo,'Tarefa De':t.from,
+    Responsavel:t.resp,'Técnico':t.tech,Unidade:u.name,Cliente:u.client,'Região':u.region,'Município':u.city,Endereço:t.addr,Base:t.base,
+    'Duração (min)':t.dur==null?'':Math.round(t.dur),Latitude:u.lat==null?'':+u.lat.toFixed(6),Longitude:u.lng==null?'':+u.lng.toFixed(6)}; });
+  const byMonth=(()=>{ const m=new Map(); v.forEach(t=>m.set(t.ym,(m.get(t.ym)||0)+1));
+    return [...m.entries()].sort().map(e=>({'Mês':fmtYM(e[0]),'Competência':e[0],'Diligências':e[1],'Participação':pct(e[1])})); })();
+  const dw=[0,0,0,0,0,0,0]; v.forEach(t=>{ dw[new Date(t.d+'T12:00:00').getDay()]++; });
+  const bySem=[1,2,3,4,5,6,0].map(i=>({'Dia da semana':DOW[i],'Diligências':dw[i],'Participação':pct(dw[i])}));
+  const add=(wb,name,rows)=>XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows.length?rows:[{'Sem dados':'—'}]),name);
+  const wb=XLSX.utils.book_new();
+  add(wb,'Resumo',resumo);
+  add(wb,'Por técnico',dim('Técnico',countBy(v,t=>t.tech)));
+  add(wb,'Por região',dim('Região',countBy(v,t=>S.units.get(t.unit).region)));
+  add(wb,'Por cliente',dim('Cliente',countBy(v,t=>S.units.get(t.unit).client)));
+  add(wb,'Por tipo de tarefa',dim('Tipo de tarefa',countBy(v,t=>t.tipo)));
+  add(wb,'Por mês',byMonth);
+  add(wb,'Dia da semana',bySem);
+  add(wb,'Unidades',unidades);
+  add(wb,'Diligências',dilig);
+  XLSX.writeFile(wb,'Panorama_Diligencias_'+new Date().toISOString().slice(0,10)+'.xlsx');
+  toast('Planilha do panorama exportada com '+fmtInt(dilig.length)+' diligências.');
+});
+
 /* ---------------- Abas ---------------- */
 function setTab(t){
   S.tab=t; $('#filters').classList.toggle('pj-mode',t==='proj'); $$('.tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
@@ -1789,20 +1977,33 @@ function rptMaps(){
   let pending=0, total=0; const st=$('#rptStatus');
   const upd=()=>{ st.textContent=pending?('Carregando mapas… '+(total-pending)+'/'+total):'Mapas carregados — pronto para imprimir.'; };
   $$('#reportPages .rpt-map').forEach(el=>{
-    const days=RPT.jobs[+el.dataset.j]; total++; pending++;
+    const job=RPT.jobs[+el.dataset.j]; total++; pending++;
     const map=L.map(el,{zoomControl:false,zoomAnimation:false,fadeAnimation:false,markerZoomAnimation:false,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,touchZoom:false,zoomSnap:0.25});
     let fin=false; const done=()=>{ if(fin) return; fin=true; pending--; upd(); };
     const tl=TILES.cartoLight().addTo(map); tl.once('load',done); setTimeout(done,14000);
-    const layer=L.layerGroup().addTo(map); drawRoute(map,layer,days,{sz:22,weight:4,static:true});
-    const pts=[]; days.forEach(d=>{ (d.geo||[]).forEach(p=>pts.push(p)); d.stops.forEach(s=>pts.push([s.u.lat,s.u.lng])); if(d.base) pts.push([d.base.lat,d.base.lng]); });
-    map.fitBounds(L.latLngBounds(pts).pad(0.1),{animate:false,maxZoom:16});
+    const layer=L.layerGroup().addTo(map);
+    const pts=[];
+    if(job&&job.ov){
+      const mx=job.units.reduce((m,u)=>Math.max(m,u.n),1);
+      job.units.forEach(u=>{
+        const r=5+9*Math.sqrt(u.n/mx);
+        L.circleMarker([u.lat,u.lng],{radius:r,color:'#fff',weight:1.2,fillColor:u.color,fillOpacity:.85}).addTo(layer);
+        pts.push([u.lat,u.lng]);
+      });
+      S.bases.forEach(b=>{ if(b.lat==null) return; L.marker([b.lat,b.lng],{icon:L.divIcon({className:'',html:'<div class=\"bpin\">B</div>',iconSize:[22,22],iconAnchor:[11,11]})}).addTo(layer); pts.push([b.lat,b.lng]); });
+    } else {
+      const days=job; drawRoute(map,layer,days,{sz:22,weight:4,static:true});
+      days.forEach(d=>{ (d.geo||[]).forEach(p=>pts.push(p)); d.stops.forEach(s=>pts.push([s.u.lat,s.u.lng])); if(d.base) pts.push([d.base.lat,d.base.lng]); });
+    }
+    if(pts.length) map.fitBounds(L.latLngBounds(pts).pad(0.1),{animate:false,maxZoom:16}); else map.setView([-22.9,-43.2],9);
     RPT.maps.push(map);
   });
   upd();
 }
 function openReport(P){
   RPT.P=P;
-  $('#reportPages').innerHTML=buildReport(P);
+  $('#rptTitle').textContent='Pré-visualização · '+(P.mode==='overview'?'Panorama de Diligências Técnicas':'Roteiro de Visitação Técnica')+' (A4 paisagem)';
+  $('#reportPages').innerHTML=P.mode==='overview'?buildOverviewReport(P):buildReport(P);
   $('#reportOverlay').classList.remove('hide'); $('#reportOverlay').scrollTop=0;
   $('#reportScale').style.transform='';
   rptMaps(); rptFitScale();
@@ -1811,7 +2012,7 @@ $('#rptClose').addEventListener('click',()=>{ $('#reportOverlay').classList.add(
 window.addEventListener('resize',()=>{ if(!$('#reportOverlay').classList.contains('hide')) rptFitScale(); });
 $('#rptPrint').addEventListener('click',()=>{
   const P=RPT.P, old=document.title;
-  document.title='Roteiro_Visitacao_'+(P&&P.tech?P.tech.replace(/[^\wÀ-ú]+/g,'_'):'Geral')+'_'+new Date().toISOString().slice(0,10);
+  document.title=(P&&P.mode==='overview'?'Panorama_Diligencias_':'Roteiro_Visitacao_'+(P&&P.tech?P.tech.replace(/[^\wÀ-ú]+/g,'_')+'_':'Geral_'))+new Date().toISOString().slice(0,10);
   RPT.maps.forEach(m=>m.invalidateSize());
   const restore=()=>{ document.title=old; window.removeEventListener('afterprint',restore); };
   window.addEventListener('afterprint',restore);
